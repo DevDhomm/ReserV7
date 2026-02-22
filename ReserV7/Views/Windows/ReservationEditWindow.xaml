@@ -1,0 +1,263 @@
+<Window
+    x:Class="ReserV7.Views.Windows.ReservationEditWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Title="Modifier la Réservation"
+    Width="600"
+    Height="700"
+    Background="{ui:ThemeResource ApplicationBackgroundBrush}"
+    Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}"
+    Topmost="True"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None">
+    <Grid Background="{ui:ThemeResource ApplicationBackgroundBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Grid
+            Grid.Row="0"
+            Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}">
+            <StackPanel Margin="24,20">
+                <TextBlock
+                    FontSize="18"
+                    FontWeight="SemiBold"
+                    Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}"
+                    Text="Modifier la Réservation" />
+                <TextBlock
+                    Margin="0,8,0,0"
+                    FontSize="12"
+                    Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{Binding SelectedReservation.Salle.Nom,
+                                   StringFormat='Salle: {0}'}" />
+            </StackPanel>
+        </Grid>
+
+        <!-- Content -->
+        <ScrollViewer Grid.Row="1" Padding="24,16" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <!-- Motif Section -->
+                <StackPanel Margin="0,0,0,20">
+                    <TextBlock
+                        FontSize="13"
+                        FontWeight="SemiBold"
+                        Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}"
+                        Text="Motif de la réservation"
+                        Margin="0,0,0,8" />
+                    <TextBox
+                        Height="80"
+                        Padding="12,10"
+                        AcceptsReturn="True"
+                        Background="{ui:ThemeResource ControlFillColorDefaultBrush}"
+                        BorderBrush="{ui:ThemeResource ControlElevationBorderBrush}"
+                        BorderThickness="1"
+                        Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}"
+                        Text="{Binding SelectedReservation.Motif,
+                                       UpdateSourceTrigger=PropertyChanged}"
+                        TextWrapping="Wrap"
+                        VerticalScrollBarVisibility="Auto" />
+                </StackPanel>
+
+                <!-- Dates Section -->
+                <Border
+                    Padding="16"
+                    Margin="0,0,0,20"
+                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1"
+                    CornerRadius="8">
+                    <StackPanel>
+                        <TextBlock
+                            FontSize="13"
+                            FontWeight="SemiBold"
+                            Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}"
+                            Text="Dates de réservation"
+                            Margin="0,0,0,12" />
+
+                        <!-- Start Date -->
+                        <StackPanel Margin="0,0,0,12">
+                            <TextBlock
+                                FontSize="12"
+                                Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}"
+                                Text="Date de début (JJ/MM/AAAA)"
+                                Margin="0,0,0,4" />
+                            <TextBox
+                                Padding="10,8"
+                                Background="{ui:ThemeResource ControlFillColorDefaultBrush}"
+                                BorderBrush="{ui:ThemeResource ControlElevationBorderBrush}"
+                                BorderThickness="1"
+                                Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}"
+                                Text="{Binding StartDateDisplay,
+                                               UpdateSourceTrigger=PropertyChanged}"
+                                ToolTip="Format: JJ/MM/AAAA" />
+                        </StackPanel>
+
+                        <!-- End Date -->
+                        <StackPanel>
+                            <TextBlock
+                                FontSize="12"
+                                Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}"
+                                Text="Date de fin (JJ/MM/AAAA)"
+                                Margin="0,0,0,4" />
+                            <TextBox
+                                Padding="10,8"
+                                Background="{ui:ThemeResource ControlFillColorDefaultBrush}"
+                                BorderBrush="{ui:ThemeResource ControlElevationBorderBrush}"
+                                BorderThickness="1"
+                                Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}"
+                                Text="{Binding EndDateDisplay,
+                                               UpdateSourceTrigger=PropertyChanged}"
+                                ToolTip="Format: JJ/MM/AAAA" />
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Time Section -->
+                <Border
+                    Padding="16"
+                    Margin="0,0,0,20"
+                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1"
+                    CornerRadius="8">
+                    <StackPanel>
+                        <TextBlock
+                            FontSize="13"
+                            FontWeight="SemiBold"
+                            Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}"
+                            Text="Horaires"
+                            Margin="0,0,0,12" />
+
+                        <!-- Start Time -->
+                        <StackPanel Margin="0,0,0,12">
+                            <TextBlock
+                                FontSize="12"
+                                Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}"
+                                Text="Heure de début (HH:mm)"
+                                Margin="0,0,0,4" />
+                            <TextBox
+                                Padding="10,8"
+                                Background="{ui:ThemeResource ControlFillColorDefaultBrush}"
+                                BorderBrush="{ui:ThemeResource ControlElevationBorderBrush}"
+                                BorderThickness="1"
+                                Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}"
+                                Text="{Binding SelectedReservation.HeureDebut,
+                                               UpdateSourceTrigger=PropertyChanged}"
+                                ToolTip="Format: HH:mm" />
+                        </StackPanel>
+
+                        <!-- End Time -->
+                        <StackPanel>
+                            <TextBlock
+                                FontSize="12"
+                                Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}"
+                                Text="Heure de fin (HH:mm)"
+                                Margin="0,0,0,4" />
+                            <TextBox
+                                Padding="10,8"
+                                Background="{ui:ThemeResource ControlFillColorDefaultBrush}"
+                                BorderBrush="{ui:ThemeResource ControlElevationBorderBrush}"
+                                BorderThickness="1"
+                                Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}"
+                                Text="{Binding SelectedReservation.HeureFin,
+                                               UpdateSourceTrigger=PropertyChanged}"
+                                ToolTip="Format: HH:mm" />
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Status Section -->
+                <Border
+                    Padding="16"
+                    Margin="0,0,0,20"
+                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1"
+                    CornerRadius="8">
+                    <StackPanel>
+                        <TextBlock
+                            FontSize="13"
+                            FontWeight="SemiBold"
+                            Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}"
+                            Text="Statut"
+                            Margin="0,0,0,8" />
+                        <ComboBox
+                            Padding="10,8"
+                            Background="{ui:ThemeResource ControlFillColorDefaultBrush}"
+                            BorderBrush="{ui:ThemeResource ControlElevationBorderBrush}"
+                            BorderThickness="1"
+                            Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}"
+                            ItemsSource="{Binding AvailableStatuts}"
+                            SelectedItem="{Binding SelectedReservation.Statut,
+                                                   UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                </Border>
+
+                <!-- Info Message -->
+                <Border
+                    Padding="12"
+                    Background="{ui:ThemeResource WarningFillColorDefaultBrush}"
+                    BorderBrush="{ui:ThemeResource WarningBorderColorDefaultBrush}"
+                    BorderThickness="1"
+                    CornerRadius="6"
+                    Visibility="{Binding ShowInfoMessage,
+                                         Converter={StaticResource BoolToVisibilityConverter}}">
+                    <TextBlock
+                        FontSize="12"
+                        Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}"
+                        Text="{Binding InfoMessage}"
+                        TextWrapping="Wrap" />
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Footer -->
+        <Border
+            Grid.Row="2"
+            Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+            BorderBrush="{ui:ThemeResource DividerStrokeColorDefaultBrush}"
+            BorderThickness="0,1,0,0"
+            Padding="24,16">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel
+                    Grid.Column="0"
+                    Margin="0,0,16,0"
+                    VerticalAlignment="Center">
+                    <TextBlock
+                        FontSize="11"
+                        Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}"
+                        Text="Les modifications seront sauvegardées dans la base de données." />
+                </StackPanel>
+
+                <Button
+                    Grid.Column="1"
+                    Margin="0,0,8,0"
+                    Padding="16,8"
+                    Background="Transparent"
+                    BorderBrush="{ui:ThemeResource ControlElevationBorderBrush}"
+                    BorderThickness="1"
+                    Click="CancelButton_Click"
+                    Content="Annuler"
+                    Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}" />
+
+                <Button
+                    Grid.Column="2"
+                    Padding="24,8"
+                    Background="{ui:ThemeResource AccentFillColorDefaultBrush}"
+                    Click="SaveButton_Click"
+                    Content="Enregistrer"
+                    Foreground="{ui:ThemeResource TextOnAccentFillColorPrimaryBrush}" />
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

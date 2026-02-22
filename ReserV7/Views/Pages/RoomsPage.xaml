@@ -1,0 +1,79 @@
+<Page
+  x:Class="ReserV7.Views.Pages.RoomsPage"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:local="clr-namespace:ReserV7.Views.Pages"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+  Title="Salles"
+  d:DataContext="{d:DesignInstance local:RoomsPage,
+                                     IsDesignTimeCreatable=False}"
+  d:DesignHeight="450"
+  d:DesignWidth="800"
+  ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+  ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+  Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+  mc:Ignorable="d"
+>
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="350" />
+    </Grid.ColumnDefinitions>
+
+    <ListBox Grid.Column="0" ItemsSource="{Binding ViewModel.Salles, Mode=OneWay}" SelectedItem="{Binding ViewModel.SelectedSalle, Mode=TwoWay}">
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <Border Padding="10" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource ControlBorderBrush}">
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+              </Grid.ColumnDefinitions>
+              <StackPanel Grid.Column="0">
+                <TextBlock FontWeight="Bold" Text="{Binding Nom}" />
+                <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="{Binding Description}" />
+                <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                  <TextBlock Foreground="{DynamicResource TextFillColorTertiaryBrush}" Text="{Binding Type}" Margin="0,0,8,0" />
+                  <TextBlock Foreground="{DynamicResource TextFillColorTertiaryBrush}" Text="{Binding Capacite, StringFormat='Capacité: {0}'}" Margin="0,0,8,0" />
+                  <TextBlock Foreground="{DynamicResource TextFillColorTertiaryBrush}" Text="{Binding Etage, StringFormat='Étage: {0}'}" />
+                </StackPanel>
+              </StackPanel>
+              <ui:SymbolIcon Grid.Column="1" Symbol="CheckmarkCircle24" Foreground="Green" />
+            </Grid>
+          </Border>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+
+    <StackPanel Grid.Column="1" Margin="20">
+      <TextBlock FontSize="18" FontWeight="Bold" Text="Détails Salle" Margin="0,0,0,12" />
+
+      <TextBlock Text="Nom" Margin="0,0,0,4" />
+      <TextBox Text="{Binding ViewModel.SelectedSalleName, Mode=TwoWay}" Margin="0,0,0,12" />
+
+      <TextBlock Text="Capacité" Margin="0,0,0,4" />
+      <TextBox Text="{Binding ViewModel.SelectedSalleCapacite, Mode=TwoWay}" Margin="0,0,0,12" />
+
+      <TextBlock Text="Type" Margin="0,0,0,4" />
+      <TextBox Text="{Binding ViewModel.SelectedSalleType, Mode=TwoWay}" Margin="0,0,0,12" />
+
+      <TextBlock Text="Étage" Margin="0,0,0,4" />
+      <TextBox Text="{Binding ViewModel.SelectedSalleEtage, Mode=TwoWay}" Margin="0,0,0,12" />
+
+      <TextBlock Text="Équipements" FontWeight="Bold" Margin="0,10,0,5" />
+      <ListBox Height="150" ItemsSource="{Binding ViewModel.SelectedEquipements, Mode=OneWay}" Margin="0,0,0,12">
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <TextBlock Text="{Binding Nom}" />
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+
+      <Button Command="{Binding ViewModel.AddRoomCommand}" Content="Ajouter Salle" Margin="0,0,0,8" />
+      <Button Command="{Binding ViewModel.DeleteRoomCommand}" Content="Supprimer" Margin="0,0,0,8" />
+      <Button Command="{Binding ViewModel.RefreshRoomsCommand}" Content="Actualiser" />
+    </StackPanel>
+  </Grid>
+</Page>

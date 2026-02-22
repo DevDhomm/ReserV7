@@ -1,0 +1,158 @@
+<Page
+  x:Class="ReserV7.Views.Pages.ReservationPage"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:local="clr-namespace:ReserV7.Views.Pages"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+  Title="Réservations"
+  d:DataContext="{d:DesignInstance local:ReservationPage,
+                                     IsDesignTimeCreatable=False}"
+  d:DesignHeight="450"
+  d:DesignWidth="800"
+  Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+  mc:Ignorable="d"
+>
+  <Grid Background="{DynamicResource ApplicationBackgroundBrush}">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+
+    <!-- Header -->
+    <StackPanel Grid.Row="0" Margin="20,20,20,12" Orientation="Vertical">
+      <TextBlock FontSize="28" FontWeight="Bold" Text="Reservations" Margin="0,0,0,4" />
+      <TextBlock FontSize="20" FontWeight="Bold" Text="Historique" Margin="0,0,0,4" />
+      <TextBlock FontSize="14" Text="Consultez et gérez vos réservations" />
+    </StackPanel>
+
+    <!-- Filter Panel -->
+    <Border Grid.Row="1" Margin="20,0,20,20" Background="{DynamicResource ControlFillColorDefaultBrush}" CornerRadius="8" Padding="16">
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="200" />
+          <ColumnDefinition Width="200" />
+          <ColumnDefinition Width="200" />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Statut Filter -->
+        <StackPanel Grid.Column="0" Orientation="Vertical" Margin="0,0,12,0">
+          <TextBlock Text="Statut" FontSize="12" FontWeight="Bold" Margin="0,0,0,6" />
+          <ComboBox ItemsSource="{Binding ViewModel.AvailableStatuts}" SelectedItem="{Binding ViewModel.SelectedStatut, Mode=TwoWay}" />
+        </StackPanel>
+
+        <!-- Salle Filter -->
+        <StackPanel Grid.Column="1" Orientation="Vertical" Margin="0,0,12,0">
+          <TextBlock Text="Salle" FontSize="12" FontWeight="Bold" Margin="0,0,0,6" />
+          <ComboBox ItemsSource="{Binding ViewModel.AvailableSalles}" SelectedItem="{Binding ViewModel.SelectedSalle, Mode=TwoWay}" />
+        </StackPanel>
+
+        <!-- Motif Filter -->
+        <StackPanel Grid.Column="2" Orientation="Vertical" Margin="0,0,12,0">
+          <TextBlock Text="Motif" FontSize="12" FontWeight="Bold" Margin="0,0,0,6" />
+          <TextBox Text="{Binding ViewModel.SelectedMotif, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+
+        <!-- Action Buttons -->
+        <StackPanel Grid.Column="4" Orientation="Horizontal" Margin="0,24,0,0" VerticalAlignment="Bottom">
+          <Button Command="{Binding ViewModel.ApplyFiltersCommand}" Content="Appliquer" Padding="12,8,12,8" Margin="0,0,8,0" Background="{DynamicResource AccentFillColorDefaultBrush}" Foreground="Black" Cursor="Hand" />
+        </StackPanel>
+
+        <Button Grid.Column="5" Command="{Binding ViewModel.ResetFiltersCommand}" Content="Reset" Padding="12,8,12,8" Margin="0,24,0,0" Background="{DynamicResource ControlFillColorSecondaryBrush}" BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1" VerticalAlignment="Bottom" Cursor="Hand" />
+
+        <!-- Selection info -->
+        <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="6" Margin="0,8,0,0" FontSize="11"  Text="{Binding ViewModel.Reservations.Count, StringFormat='Affichage: {0} réservation(s)'}" />
+      </Grid>
+    </Border>
+
+    <!-- Reservations List -->
+    <ScrollViewer Grid.Row="2" Margin="20,0,20,20" VerticalScrollBarVisibility="Auto">
+      <ItemsControl ItemsSource="{Binding ViewModel.Reservations, Mode=OneWay}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <Border Padding="20" BorderThickness="1" BorderBrush="{DynamicResource ControlElevationBorderBrush}" CornerRadius="12" Margin="0,0,0,16" Background="{DynamicResource ControlFillColorSecondaryBrush}">
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Reservation Details -->
+                <StackPanel Grid.Column="0" Margin="0">
+                  <!-- Title with Status Badge -->
+                  <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                    <TextBlock FontSize="18" FontWeight="Bold" Text="{Binding Salle.Nom}" VerticalAlignment="Center" Margin="0,0,12,0" />
+                    <ui:Badge Content="{Binding Statut}" Appearance="Secondary" />
+                  </StackPanel>
+
+                  <!-- Info Grid -->
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <!-- User Info -->
+                    <TextBlock Grid.Column="0" Grid.Row="0" Foreground="{DynamicResource SystemControlForegroundBaseMediumBrush}" FontSize="12" Margin="0,0,0,8">
+                      <Run FontWeight="Bold" Text="Utilisateur: " />
+                      <Run Text="{Binding User.Nom, Mode=OneWay}" />
+                    </TextBlock>
+
+                    <!-- Motif -->
+                    <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Foreground="{DynamicResource SystemControlForegroundBaseMediumBrush}" FontSize="12" Margin="0,0,0,8" TextWrapping="Wrap">
+                      <Run FontWeight="Bold" Text="Motif: " />
+                      <Run Text="{Binding Motif, Mode=OneWay}" />
+                    </TextBlock>
+
+                    <!-- Date Debut -->
+                    <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,8">
+                      <TextBlock Foreground="{DynamicResource SystemControlForegroundBaseMediumBrush}" FontSize="12" FontWeight="Bold" Text="📅 Début: " Margin="0,0,4,0" />
+                      <TextBlock Foreground="{DynamicResource SystemControlForegroundBaseMediumBrush}" FontSize="12" Text="{Binding DateDebut, StringFormat='dd/MM/yyyy'}" />
+                    </StackPanel>
+
+                    <!-- Date Fin -->
+                    <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,8">
+                      <TextBlock Foreground="{DynamicResource SystemControlForegroundBaseMediumBrush}" FontSize="12" FontWeight="Bold" Text="📅 Fin: " Margin="0,0,4,0" />
+                      <TextBlock Foreground="{DynamicResource SystemControlForegroundBaseMediumBrush}" FontSize="12" Text="{Binding DateFin, StringFormat='dd/MM/yyyy'}" />
+                    </StackPanel>
+
+                    <!-- Horaire -->
+                    <StackPanel Grid.Column="0" Grid.Row="3" Orientation="Horizontal" Margin="0,0,0,0">
+                      <TextBlock Foreground="{DynamicResource SystemControlForegroundBaseMediumBrush}" FontSize="12" FontWeight="Bold" Text="🕐 Horaire: " Margin="0,0,4,0" />
+                      <TextBlock Foreground="{DynamicResource SystemControlForegroundBaseMediumBrush}" FontSize="12">
+                        <Run Text="{Binding HeureDebut, Mode=OneWay}" />
+                        <Run Text=" - " />
+                        <Run Text="{Binding HeureFin, Mode=OneWay}" />
+                      </TextBlock>
+                    </StackPanel>
+                  </Grid>
+                </StackPanel>
+
+                <!-- Actions -->
+                <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center" Margin="20,0,0,0">
+                  <Button Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Page}, Path=DataContext.ViewModel.EditReservationCommand}" Content="Modifier" Padding="12,8,12,8" Margin="0,0,0,8" Background="{DynamicResource ControlFillColorDefaultBrush}" BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1" Cursor="Hand" />
+                  <Button Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Page}, Path=DataContext.ViewModel.DeleteReservationCommand}" Content="Supprimer" Padding="12,8,12,8" Background="{DynamicResource ControlFillColorDefaultBrush}" BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1" Cursor="Hand" Foreground="{DynamicResource SystemControlForegroundBaseMediumBrush}" />
+                </StackPanel>
+              </Grid>
+            </Border>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </ScrollViewer>
+  </Grid>
+</Page>
