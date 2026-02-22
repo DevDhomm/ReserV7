@@ -1,0 +1,245 @@
+<Window
+  x:Class="ReserV7.Views.Windows.RoomEditWindow"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+  Title="Éditer : Salle"
+  Width="700"
+  Height="800"
+  WindowStartupLocation="CenterOwner"
+  ShowInTaskbar="False"
+  WindowStyle="SingleBorderWindow"
+  Background="{DynamicResource ApplicationBackgroundBrush}"
+  d:DesignHeight="800"
+  d:DesignWidth="700"
+  mc:Ignorable="d"
+>
+  <Grid RowDefinitions="Auto,*,Auto">
+    <!-- Header -->
+    <Border 
+      Grid.Row="0" 
+      Padding="20,16,20,16" 
+      BorderThickness="0,0,0,1"
+      BorderBrush="{DynamicResource ControlBorderBrush}">
+      <TextBlock 
+        FontSize="20" 
+        FontWeight="Bold" 
+        Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+        x:Name="TitleBlock"
+        Text="Ajouter : Nouvelle Salle" />
+    </Border>
+
+    <!-- Content -->
+    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="20">
+      <StackPanel Orientation="Vertical">
+
+        <!-- Room Name -->
+        <StackPanel Orientation="Vertical" Margin="0,0,0,20">
+          <TextBlock FontSize="14" FontWeight="SemiBold" Text="Nom de la salle *" Margin="0,0,0,6" />
+          <TextBox
+            x:Name="NomTextBox"
+            Text="{Binding RoomName, Mode=TwoWay}"
+            Padding="12,8"
+            MinHeight="40" />
+        </StackPanel>
+
+        <!-- Description -->
+        <StackPanel Orientation="Vertical" Margin="0,0,0,20">
+          <TextBlock FontSize="14" FontWeight="SemiBold" Text="Description" Margin="0,0,0,6" />
+          <TextBox
+            x:Name="DescriptionTextBox"
+            Text="{Binding RoomDescription, Mode=TwoWay}"
+            Padding="12,8"
+            MinHeight="80"
+            TextWrapping="Wrap"
+            AcceptsReturn="True" />
+        </StackPanel>
+
+        <!-- Capacity -->
+        <StackPanel Orientation="Vertical" Margin="0,0,0,20">
+          <TextBlock FontSize="14" FontWeight="SemiBold" Text="Capacité (personnes) *" Margin="0,0,0,6" />
+          <TextBox
+            x:Name="CapaciteTextBox"
+            Text="{Binding RoomCapacity, Mode=TwoWay}"
+            Padding="12,8"
+            MinHeight="40" />
+        </StackPanel>
+
+        <!-- Room Type -->
+        <StackPanel Orientation="Vertical" Margin="0,0,0,20">
+          <TextBlock FontSize="14" FontWeight="SemiBold" Text="Type de salle" Margin="0,0,0,6" />
+          <ComboBox
+            x:Name="TypeComboBox"
+            SelectedItem="{Binding RoomType, Mode=TwoWay}"
+            Padding="12,8"
+            MinHeight="40">
+            <System:String xmlns:System="clr-namespace:System;assembly=mscorlib">Amphithéâtre</System:String>
+            <System:String xmlns:System="clr-namespace:System;assembly=mscorlib">Salle de réunion</System:String>
+            <System:String xmlns:System="clr-namespace:System;assembly=mscorlib">Salle de séminaire</System:String>
+            <System:String xmlns:System="clr-namespace:System;assembly=mscorlib">Salle de travail collaboratif</System:String>
+            <System:String xmlns:System="clr-namespace:System;assembly=mscorlib">Salle de cours</System:String>
+            <System:String xmlns:System="clr-namespace:System;assembly=mscorlib">Laboratoire</System:String>
+            <System:String xmlns:System="clr-namespace:System;assembly=mscorlib">Autre</System:String>
+          </ComboBox>
+        </StackPanel>
+
+        <!-- Floor -->
+        <StackPanel Orientation="Vertical" Margin="0,0,0,20">
+          <TextBlock FontSize="14" FontWeight="SemiBold" Text="Étage" Margin="0,0,0,6" />
+          <TextBox
+            x:Name="EtageTextBox"
+            Text="{Binding RoomFloor, Mode=TwoWay}"
+            Padding="12,8"
+            MinHeight="40" />
+        </StackPanel>
+
+        <!-- Available Checkbox -->
+        <CheckBox
+          x:Name="DisponibleCheckBox"
+          IsChecked="{Binding IsAvailable, Mode=TwoWay}"
+          Padding="8"
+          FontSize="13"
+          Content="Salle disponible" 
+          Margin="0,0,0,20" />
+
+        <!-- Equipment Section -->
+        <Border 
+          Padding="16" 
+          CornerRadius="8"
+          Background="{DynamicResource ControlFillColorSecondaryBrush}"
+          BorderBrush="{DynamicResource ControlBorderBrush}"
+          BorderThickness="1">
+          <StackPanel Orientation="Vertical">
+            <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,12">
+              <TextBlock 
+                Grid.Column="0"
+                FontSize="14" 
+                FontWeight="Bold" 
+                Text="Équipements de la salle" />
+              <ui:Button
+                Grid.Column="1"
+                Appearance="Primary"
+                Command="{Binding AddEquipmentCommand}"
+                Content="Ajouter Équipement"
+                Icon="Add24"
+                Padding="12,6" />
+            </Grid>
+
+            <!-- Empty State Message -->
+            <TextBlock 
+              x:Name="EmptyStateText"
+              FontSize="12"
+              Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+              Text="Aucun équipement ajouté. Cliquez sur 'Ajouter Équipement' pour commencer."
+              TextAlignment="Center"
+              Padding="20,30"
+              Visibility="{Binding RoomEquipments.Count, Converter={StaticResource EmptyCollectionToVisibilityConverter}}" />
+
+            <!-- Equipment List -->
+            <ItemsControl x:Name="EquipmentItemsControl" ItemsSource="{Binding RoomEquipments, Mode=OneWay}">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <Border 
+                    Background="{DynamicResource ControlBackgroundBrush}"
+                    BorderBrush="{DynamicResource ControlBorderBrush}"
+                    BorderThickness="1"
+                    CornerRadius="4"
+                    Margin="0,4,0,4"
+                    Padding="12">
+                    <Grid ColumnDefinitions="*,Auto">
+                      <!-- Equipment Info -->
+                      <StackPanel Grid.Column="0" Orientation="Vertical" VerticalAlignment="Center">
+                        <TextBlock 
+                          FontSize="13" 
+                          FontWeight="SemiBold" 
+                          Text="{Binding Nom}" 
+                          Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
+                        <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                          <TextBlock 
+                            FontSize="11" 
+                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                            Text="Type: " />
+                          <TextBlock 
+                            FontSize="11" 
+                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                            Text="{Binding Type}" 
+                            FontWeight="SemiBold" />
+                          <TextBlock 
+                            FontSize="11" 
+                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                            Text=" | " 
+                            Margin="12,0,0,0" />
+                          <TextBlock 
+                            FontSize="11" 
+                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                            Text="{Binding EstFonctionnel, Converter={StaticResource FunctionalStatusConverter}}" 
+                            FontWeight="SemiBold" 
+                            Margin="0,0,0,0" />
+                        </StackPanel>
+                        <TextBlock 
+                          FontSize="11" 
+                          Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                          Text="{Binding Description}"
+                          TextWrapping="Wrap"
+                          Margin="0,4,0,0"
+                          Visibility="{Binding Description, Converter={StaticResource StringToVisibilityConverter}}" />
+                      </StackPanel>
+
+                      <!-- Action Buttons -->
+                      <StackPanel 
+                        Grid.Column="1" 
+                        Orientation="Horizontal" 
+                        VerticalAlignment="Center"
+                        Margin="12,0,0,0">
+                        <ui:Button
+                          Margin="0,0,4,0"
+                          Appearance="Secondary"
+                          Command="{Binding DataContext.EditEquipmentCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                          CommandParameter="{Binding}"
+                          ToolTip="Éditer cet équipement"
+                          Icon="Edit24"
+                          Padding="8" />
+                        <ui:Button
+                          Appearance="Secondary"
+                          Command="{Binding DataContext.RemoveEquipmentCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                          CommandParameter="{Binding}"
+                          ToolTip="Supprimer cet équipement"
+                          Icon="Delete24"
+                          Padding="8" />
+                      </StackPanel>
+                    </Grid>
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </StackPanel>
+        </Border>
+      </StackPanel>
+    </ScrollViewer>
+
+    <!-- Footer Buttons -->
+    <Border 
+      Grid.Row="2" 
+      Padding="20,16,20,16" 
+      BorderThickness="0,1,0,0"
+      BorderBrush="{DynamicResource ControlBorderBrush}">
+      <Grid ColumnDefinitions="*,Auto,Auto">
+        <ui:Button
+          Grid.Column="1"
+          Margin="0,0,12,0"
+          Appearance="Secondary"
+          Content="Annuler"
+          Click="CancelButton_Click"
+          Padding="20,8" />
+        <ui:Button
+          Grid.Column="2"
+          Appearance="Success"
+          Content="Sauvegarder"
+          Command="{Binding SaveCommand}"
+          Padding="20,8" />
+      </Grid>
+    </Border>
+  </Grid>
+</Window>

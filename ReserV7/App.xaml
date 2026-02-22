@@ -20,6 +20,9 @@
       <local:BoolToVisibilityConverterInverse x:Key="BoolToVisibilityConverterInverse" />
       <local:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
       <local:BoolToAvailabilityStringConverter x:Key="BoolToAvailabilityStringConverter" />
+      <local:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
+      <local:EmptyCollectionToVisibilityConverter x:Key="EmptyCollectionToVisibilityConverter" />
+      <local:FunctionalStatusConverter x:Key="FunctionalStatusConverter" />
     </ResourceDictionary>
   </Application.Resources>
 </Application>

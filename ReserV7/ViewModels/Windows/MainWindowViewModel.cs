@@ -86,13 +86,6 @@ namespace ReserV7.ViewModels.Windows
                         Icon = new SymbolIcon { Symbol = SymbolRegular.Settings24 },
                         TargetPageType = typeof(Views.Pages.GestionnairePage)
                     });
-
-                    items.Add(new NavigationViewItem()
-                    {
-                        Content = "Data",
-                        Icon = new SymbolIcon { Symbol = SymbolRegular.DataHistogram24 },
-                        TargetPageType = typeof(Views.Pages.DataPage)
-                    });
                 }
             }
 
