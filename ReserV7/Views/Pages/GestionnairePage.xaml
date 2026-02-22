@@ -9,89 +9,124 @@
   Title="Gestionnaire"
   d:DataContext="{d:DesignInstance local:GestionnairePage,
                                      IsDesignTimeCreatable=False}"
-  d:DesignHeight="450"
-  d:DesignWidth="800"
+  d:DesignHeight="600"
+  d:DesignWidth="1200"
   ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
   ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
   mc:Ignorable="d"
 >
-  <Grid>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="Auto" />
-      <RowDefinition Height="*" />
-    </Grid.RowDefinitions>
+  <Grid RowDefinitions="Auto,*">
+    <!-- Header Section -->
+    <StackPanel Grid.Row="0" Margin="20">
+      <TextBlock FontSize="28" FontWeight="Bold" Text="Gestion des Utilisateurs" />
+      <TextBlock FontSize="14" Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="Créez, modifiez et supprimez les utilisateurs" Margin="0,4,0,0" />
 
-    <StackPanel Grid.Row="0" Margin="20" Orientation="Horizontal">
-      <Border Background="{DynamicResource ControlFillColorDefaultBrush}" CornerRadius="8" Padding="15" Margin="0,0,20,0">
-        <StackPanel>
-          <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="Total Réservations" />
-          <TextBlock FontSize="24" FontWeight="Bold" Text="{Binding ViewModel.TotalReservations}" />
-        </StackPanel>
-      </Border>
-
-      <Border Background="{DynamicResource ControlFillColorDefaultBrush}" CornerRadius="8" Padding="15" Margin="0,0,20,0">
-        <StackPanel>
-          <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="En Attente" />
-          <TextBlock FontSize="24" FontWeight="Bold" Foreground="Orange" Text="{Binding ViewModel.ReservationsEnAttente}" />
-        </StackPanel>
-      </Border>
-
-      <Border Background="{DynamicResource ControlFillColorDefaultBrush}" CornerRadius="8" Padding="15">
-        <StackPanel>
-          <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="Total Utilisateurs" />
-          <TextBlock FontSize="24" FontWeight="Bold" Text="{Binding ViewModel.TotalUtilisateurs}" />
-        </StackPanel>
-      </Border>
+      <!-- Search and Add Button -->
+      <Grid ColumnDefinitions="*,Auto,Auto" Margin="0,12,0,0">
+        <TextBox 
+          Grid.Column="0"
+          x:Name="SearchBox"
+          Text="{Binding ViewModel.SearchText, Mode=TwoWay}"
+          Padding="12,8"
+          VerticalAlignment="Center" />
+        <ui:Button
+          Grid.Column="1"
+          Margin="12,0,0,0"
+          Appearance="Secondary"
+          Command="{Binding ViewModel.SearchCommand}"
+          Content="Chercher"
+          Icon="Search24" />
+        <ui:Button
+          Grid.Column="2"
+          Margin="12,0,0,0"
+          Appearance="Primary"
+          Command="{Binding ViewModel.AddUtilisateurCommand}"
+          Content="Ajouter Utilisateur"
+          Icon="Add24" />
+      </Grid>
+      <TextBlock 
+        FontSize="12" 
+        Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+        Text="💡 Conseil: Vous pouvez chercher par nom, email ou nom d'utilisateur" 
+        Margin="0,8,0,0" />
     </StackPanel>
 
-    <Grid Grid.Row="1">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="*" />
-        <ColumnDefinition Width="300" />
-      </Grid.ColumnDefinitions>
+    <!-- Users Table -->
+    <DataGrid
+      Grid.Row="1"
+      AutoGenerateColumns="False"
+      Background="{DynamicResource ControlBackgroundBrush}"
+      BorderBrush="{DynamicResource ControlBorderBrush}"
+      BorderThickness="1"
+      CanUserAddRows="False"
+      Margin="20,0,20,20"
+      ItemsSource="{Binding ViewModel.FilteredUtilisateurs, Mode=OneWay}"
+      SelectedItem="{Binding ViewModel.SelectedUtilisateur, Mode=TwoWay}"
+      RowHeaderWidth="0">
+      <DataGrid.Columns>
+        <!-- Nom -->
+        <DataGridTextColumn 
+          Binding="{Binding Nom}" 
+          Header="Nom" 
+          MinWidth="120"
+          IsReadOnly="True" />
 
-      <ListBox Grid.Column="0" ItemsSource="{Binding ViewModel.Reservations, Mode=OneWay}" Margin="20,0,0,20" SelectedItem="{Binding ViewModel.SelectedReservation, Mode=TwoWay}">
-        <ListBox.ItemTemplate>
-          <DataTemplate>
-            <Border Padding="10" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource ControlBorderBrush}">
-              <Grid>
-                <Grid.ColumnDefinitions>
-                  <ColumnDefinition Width="*" />
-                  <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0">
-                  <TextBlock FontWeight="Bold" Text="{Binding Salle.Nom}" />
-                  <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="{Binding User.Nom}" />
-                  <TextBlock Foreground="{DynamicResource TextFillColorTertiaryBrush}" Text="{Binding DateDebut}" />
-                  <TextBlock Foreground="{DynamicResource TextFillColorTertiaryBrush}" Text="{Binding HeureDebut}" />
-                </StackPanel>
-                <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="{Binding Statut}" FontWeight="Bold" />
-              </Grid>
-            </Border>
-          </DataTemplate>
-        </ListBox.ItemTemplate>
-      </ListBox>
+        <!-- Email -->
+        <DataGridTextColumn 
+          Binding="{Binding Email}" 
+          Header="Email" 
+          MinWidth="150"
+          IsReadOnly="True" />
 
-      <StackPanel Grid.Column="1" Margin="20">
-        <TextBlock FontSize="16" FontWeight="Bold" Text="Actions" Margin="0,0,0,12" />
+        <!-- Username -->
+        <DataGridTextColumn 
+          Binding="{Binding Username}" 
+          Header="Nom d'utilisateur" 
+          MinWidth="120"
+          IsReadOnly="True" />
 
-        <TextBlock Text="Statut" Margin="0,0,0,4" />
-        <ComboBox SelectedItem="{Binding ViewModel.SelectedStatut, Mode=TwoWay}" Margin="0,0,0,12">
-          <ComboBoxItem>En attente</ComboBoxItem>
-          <ComboBoxItem>Confirmée</ComboBoxItem>
-          <ComboBoxItem>Annulée</ComboBoxItem>
-          <ComboBoxItem>Terminée</ComboBoxItem>
-        </ComboBox>
+        <!-- Rôle -->
+        <DataGridTextColumn 
+          Binding="{Binding Role}" 
+          Header="Rôle" 
+          MinWidth="100"
+          IsReadOnly="True" />
 
-        <Button Command="{Binding ViewModel.UpdateReservationStatutCommand}" Content="Mettre à Jour" Margin="0,0,0,8" />
-        <Button Command="{Binding ViewModel.AnnulerReservationCommand}" Content="Annuler" Margin="0,0,0,12" />
+        <!-- Date Création -->
+        <DataGridTextColumn 
+          Binding="{Binding DateCreation, StringFormat='dd/MM/yyyy'}" 
+          Header="Date Création" 
+          MinWidth="120"
+          IsReadOnly="True" />
 
-        <Separator Margin="0,10,0,10" />
-
-        <Button Command="{Binding ViewModel.RefreshDataCommand}" Content="Actualiser" Margin="0,0,0,8" />
-        <Button Command="{Binding ViewModel.ExportReservationsCommand}" Content="Exporter" />
-      </StackPanel>
-    </Grid>
+        <!-- Actions -->
+        <DataGridTemplateColumn Header="Actions" MinWidth="220">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <StackPanel Orientation="Horizontal">
+                <ui:Button
+                  Margin="0,0,8,0"
+                  Appearance="Secondary"
+                  Command="{Binding DataContext.ViewModel.EditUtilisateurCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                  CommandParameter="{Binding}"
+                  ToolTip="Éditer cet utilisateur"
+                  Icon="Edit24"
+                  Content="Éditer"
+                  Padding="12,8" />
+                <ui:Button
+                  Appearance="Secondary"
+                  Command="{Binding DataContext.ViewModel.DeleteUtilisateurCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                  CommandParameter="{Binding}"
+                  ToolTip="Supprimer cet utilisateur"
+                  Icon="Delete24"
+                  Content="Supprimer"
+                  Padding="12,8" />
+              </StackPanel>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+      </DataGrid.Columns>
+    </DataGrid>
   </Grid>
 </Page>
