@@ -141,16 +141,83 @@ namespace ReserV7.ViewModels.Pages
         }
 
         [RelayCommand]
-        private void DeleteReservation()
+        private void DeleteReservation(Reservation reservation)
         {
-            if (SelectedReservation == null)
+            if (reservation == null)
+            {
+                MessageBox.Show("Veuillez sélectionner une réservation à supprimer.", "Aucune sélection", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
+            }
 
-            _context.Reservations.Remove(SelectedReservation);
-            _context.SaveChanges();
-            _allReservations.Remove(SelectedReservation);
-            ApplyFilters();
-            SelectedReservation = null;
+            var result = MessageBox.Show(
+                $"Êtes-vous sûr de vouloir supprimer cette réservation pour {reservation.Salle?.Nom}?",
+                "Confirmation de suppression",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    _context.Reservations.Remove(reservation);
+                    _context.SaveChanges();
+                    _allReservations.Remove(reservation);
+                    ApplyFilters();
+                    MessageBox.Show("La réservation a été supprimée avec succès.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Erreur lors de la suppression: {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        [RelayCommand]
+        private void CancelReservation(Reservation reservation)
+        {
+            if (reservation == null)
+            {
+                MessageBox.Show("Veuillez sélectionner une réservation à annuler.", "Aucune sélection", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // Check if reservation can be cancelled
+            if (reservation.Statut == "Annulée")
+            {
+                MessageBox.Show("Cette réservation est déjà annulée.", "Déjà annulée", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            if (reservation.Statut == "Terminée")
+            {
+                MessageBox.Show("Vous ne pouvez pas annuler une réservation terminée.", "Action non autorisée", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var result = MessageBox.Show(
+                $"Êtes-vous sûr de vouloir annuler cette réservation pour {reservation.Salle?.Nom}?",
+                "Confirmation d'annulation",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    reservation.Statut = "Annulée";
+                    _context.Reservations.Update(reservation);
+                    _context.SaveChanges();
+
+                    // Refresh the list
+                    LoadData();
+
+                    MessageBox.Show("La réservation a été annulée avec succès.", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Erreur lors de l'annulation: {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
 
         /// <summary>
@@ -233,13 +300,33 @@ namespace ReserV7.ViewModels.Pages
 
         /// <summary>
         /// Opens a dialog to edit the selected reservation.
+        /// Only allows editing for reservations with status "En attente" or "Confirmée".
         /// </summary>
         [RelayCommand]
-        public void EditReservation()
+        public void EditReservation(Reservation reservation)
         {
-            if (SelectedReservation == null)
+            if (reservation == null)
             {
                 MessageBox.Show("Veuillez sélectionner une réservation à modifier.", "Aucune sélection", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // Check if reservation can be edited based on status
+            if (reservation.Statut == "Terminée")
+            {
+                MessageBox.Show("Vous ne pouvez pas modifier une réservation terminée.", "Action non autorisée", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (reservation.Statut == "En cours")
+            {
+                MessageBox.Show("Vous ne pouvez pas modifier une réservation en cours.", "Action non autorisée", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (reservation.Statut == "Annulée")
+            {
+                MessageBox.Show("Vous ne pouvez pas modifier une réservation annulée.", "Action non autorisée", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -247,7 +334,7 @@ namespace ReserV7.ViewModels.Pages
             var reservationToEdit = _context.Reservations
                 .Include(r => r.Salle)
                 .Include(r => r.User)
-                .FirstOrDefault(r => r.Id == SelectedReservation.Id);
+                .FirstOrDefault(r => r.Id == reservation.Id);
 
             if (reservationToEdit == null)
             {

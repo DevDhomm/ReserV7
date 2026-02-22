@@ -30,6 +30,12 @@ namespace ReserV7.ViewModels.Pages
         private DateTime selectedDate = DateTime.Now;
 
         [ObservableProperty]
+        private DateTime selectedDateStart = DateTime.Now;
+
+        [ObservableProperty]
+        private DateTime selectedDateEnd = DateTime.Now;
+
+        [ObservableProperty]
         private DateTime selectedEndDate = DateTime.Now;
 
         [ObservableProperty]
@@ -208,6 +214,18 @@ namespace ReserV7.ViewModels.Pages
             AvailableCreneaux = new ObservableCollection<CreneauDisplay>(
                 availableCreneaux.OrderBy(c => c.Debut)
             );
+        }
+
+        partial void OnSelectedDateStartChanged(DateTime value)
+        {
+            // Sync with SelectedDate
+            SelectedDate = value;
+        }
+
+        partial void OnSelectedDateEndChanged(DateTime value)
+        {
+            // Sync with SelectedEndDate
+            SelectedEndDate = value;
         }
 
         partial void OnSelectedDateChanged(DateTime value)

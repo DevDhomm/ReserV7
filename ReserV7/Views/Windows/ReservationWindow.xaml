@@ -45,7 +45,7 @@
           <Border  CornerRadius="8" Padding="16" Margin="0,0,0,20">
             <StackPanel Orientation="Vertical">
                         <TextBlock FontSize="14" FontWeight="Bold"           Foreground="AliceBlue"
- Text="Motif de la reservation" Margin="0,0,0,8" />
+ Text="Motif de la reservation *" Margin="0,0,0,8" />
               <TextBox
                 x:Name="MotifTextBox"
                 Text="{Binding ViewModel.SelectedMotif, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -74,29 +74,23 @@
               <StackPanel Orientation="Vertical" Margin="0,0,0,12">
                             <TextBlock FontSize="12"           Foreground="AliceBlue"
  FontWeight="SemiBold" Text="Date de debut *" Margin="0,0,0,6" />
-                <TextBox
-                              Foreground="AliceBlue"
-
-                  x:Name="DateStartTextBox"
-                  Text="{Binding ViewModel.SelectedDate, Mode=TwoWay, StringFormat='dd/MM/yyyy'}"
+                <DatePicker
+                  x:Name="DateStartPicker"
+                  SelectedDate="{Binding ViewModel.SelectedDateStart, Mode=TwoWay}"
                   Padding="12,8,12,8"
-                  IsReadOnly="False"
                 />
-                            <TextBlock FontSize="10"           Foreground="AliceBlue"
-  Text="Entrez la date au format JJ/MM/AAAA" Margin="0,4,0,0" />
               </StackPanel>
 
               <!-- Date fin -->
               <StackPanel Orientation="Vertical">
                 <TextBlock FontSize="12" FontWeight="SemiBold" Text="Date de fin *" Margin="0,0,0,6" />
-                <TextBox
-                  x:Name="DateEndTextBox"
-                  Text="{Binding ViewModel.SelectedEndDate, Mode=TwoWay, StringFormat='dd/MM/yyyy'}"
+                <DatePicker
+                  x:Name="DateEndPicker"
+                  SelectedDate="{Binding ViewModel.SelectedDateEnd, Mode=TwoWay}"
                   Padding="12,8,12,8"
-                  IsReadOnly="False"
                 />
                             <TextBlock FontSize="10"           Foreground="AliceBlue"
- Text="Entrez la date au format JJ/MM/AAAA (meme date si 1 jour)" Margin="0,4,0,0" />
+ Text="(meme date si 1 jour)" Margin="0,4,0,0" />
               </StackPanel>
             </StackPanel>
           </Border>

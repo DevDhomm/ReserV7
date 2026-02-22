@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:converters="clr-namespace:ReserV7.Converters"
     Title="Modifier la Réservation"
     Width="600"
     Height="700"
@@ -11,6 +12,9 @@
     Topmost="True"
     WindowStartupLocation="CenterScreen"
     WindowStyle="None">
+    <Window.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </Window.Resources>
     <Grid Background="{ui:ThemeResource ApplicationBackgroundBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -46,7 +50,7 @@
                         FontSize="13"
                         FontWeight="SemiBold"
                         Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}"
-                        Text="Motif de la réservation"
+                        Text="Motif de la réservation *"
                         Margin="0,0,0,8" />
                     <TextBox
                         Height="80"
@@ -83,17 +87,16 @@
                             <TextBlock
                                 FontSize="12"
                                 Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}"
-                                Text="Date de début (JJ/MM/AAAA)"
+                                Text="Date de début *"
                                 Margin="0,0,0,4" />
-                            <TextBox
+                            <DatePicker
                                 Padding="10,8"
                                 Background="{ui:ThemeResource ControlFillColorDefaultBrush}"
                                 BorderBrush="{ui:ThemeResource ControlElevationBorderBrush}"
                                 BorderThickness="1"
                                 Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}"
-                                Text="{Binding StartDateDisplay,
-                                               UpdateSourceTrigger=PropertyChanged}"
-                                ToolTip="Format: JJ/MM/AAAA" />
+                                SelectedDate="{Binding StartDatePickerValue,
+                                               UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
 
                         <!-- End Date -->
@@ -101,17 +104,16 @@
                             <TextBlock
                                 FontSize="12"
                                 Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}"
-                                Text="Date de fin (JJ/MM/AAAA)"
+                                Text="Date de fin *"
                                 Margin="0,0,0,4" />
-                            <TextBox
+                            <DatePicker
                                 Padding="10,8"
                                 Background="{ui:ThemeResource ControlFillColorDefaultBrush}"
                                 BorderBrush="{ui:ThemeResource ControlElevationBorderBrush}"
                                 BorderThickness="1"
                                 Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}"
-                                Text="{Binding EndDateDisplay,
-                                               UpdateSourceTrigger=PropertyChanged}"
-                                ToolTip="Format: JJ/MM/AAAA" />
+                                SelectedDate="{Binding EndDatePickerValue,
+                                               UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
                     </StackPanel>
                 </Border>
@@ -200,8 +202,8 @@
                 <!-- Info Message -->
                 <Border
                     Padding="12"
-                    Background="{ui:ThemeResource WarningFillColorDefaultBrush}"
-                    BorderBrush="{ui:ThemeResource WarningBorderColorDefaultBrush}"
+                    Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ui:ThemeResource ControlElevationBorderBrush}"
                     BorderThickness="1"
                     CornerRadius="6"
                     Visibility="{Binding ShowInfoMessage,
@@ -253,10 +255,12 @@
                 <Button
                     Grid.Column="2"
                     Padding="24,8"
-                    Background="{ui:ThemeResource AccentFillColorDefaultBrush}"
+                    Background="{ui:ThemeResource ControlFillColorDefaultBrush}"
+                    BorderBrush="{ui:ThemeResource ControlElevationBorderBrush}"
+                    BorderThickness="1"
                     Click="SaveButton_Click"
                     Content="Enregistrer"
-                    Foreground="{ui:ThemeResource TextOnAccentFillColorPrimaryBrush}" />
+                    Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}" />
             </Grid>
         </Border>
     </Grid>

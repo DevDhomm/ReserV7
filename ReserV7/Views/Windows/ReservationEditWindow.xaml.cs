@@ -1,13 +1,21 @@
 using System.Windows;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using ReserV7.Models;
 
 namespace ReserV7.Views.Windows
 {
-    public partial class ReservationEditWindow : Window
+    public partial class ReservationEditWindow : Window, INotifyPropertyChanged
     {
         public Reservation? SelectedReservation { get; set; }
         public bool IsModified { get; set; }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         public ReservationEditWindow(Reservation reservation)
         {
@@ -91,6 +99,7 @@ namespace ReserV7.Views.Windows
                 if (SelectedReservation != null && DateTime.TryParse(value, System.Globalization.CultureInfo.CurrentCulture, System.Globalization.DateTimeStyles.None, out DateTime date))
                 {
                     SelectedReservation.DateDebut = date.ToString("yyyy-MM-dd");
+                    OnPropertyChanged(nameof(StartDateDisplay));
                 }
             }
         }
@@ -110,6 +119,47 @@ namespace ReserV7.Views.Windows
                 if (SelectedReservation != null && DateTime.TryParse(value, System.Globalization.CultureInfo.CurrentCulture, System.Globalization.DateTimeStyles.None, out DateTime date))
                 {
                     SelectedReservation.DateFin = date.ToString("yyyy-MM-dd");
+                    OnPropertyChanged(nameof(EndDateDisplay));
+                }
+            }
+        }
+
+        public DateTime? StartDatePickerValue
+        {
+            get
+            {
+                if (DateTime.TryParse(SelectedReservation?.DateDebut, out DateTime date))
+                {
+                    return date;
+                }
+                return null;
+            }
+            set
+            {
+                if (SelectedReservation != null && value.HasValue)
+                {
+                    SelectedReservation.DateDebut = value.Value.ToString("yyyy-MM-dd");
+                    OnPropertyChanged(nameof(StartDatePickerValue));
+                }
+            }
+        }
+
+        public DateTime? EndDatePickerValue
+        {
+            get
+            {
+                if (DateTime.TryParse(SelectedReservation?.DateFin, out DateTime date))
+                {
+                    return date;
+                }
+                return null;
+            }
+            set
+            {
+                if (SelectedReservation != null && value.HasValue)
+                {
+                    SelectedReservation.DateFin = value.Value.ToString("yyyy-MM-dd");
+                    OnPropertyChanged(nameof(EndDatePickerValue));
                 }
             }
         }

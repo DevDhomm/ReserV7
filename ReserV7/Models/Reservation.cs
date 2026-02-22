@@ -5,7 +5,7 @@ namespace ReserV7.Models
         public int Id { get; set; }
         public string DateReservation { get; set; } = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss");
         public string Motif { get; set; } = string.Empty;
-        public string Statut { get; set; } = "Confirmée"; // En attente, Confirmée, Annulée, Terminée
+        public string Statut { get; set; } = "Confirmée"; // En attente, Confirmée, En cours, Annulée, Terminée
 
         public int UserId { get; set; }
         public int SalleId { get; set; }

@@ -6,6 +6,7 @@
   xmlns:local="clr-namespace:ReserV7.Views.Pages"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+  xmlns:converters="clr-namespace:ReserV7.Converters"
   Title="Réservations"
   d:DataContext="{d:DesignInstance local:ReservationPage,
                                      IsDesignTimeCreatable=False}"
@@ -14,6 +15,11 @@
   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
   mc:Ignorable="d"
 >
+  <Page.Resources>
+    <converters:StatusToBrushConverter x:Key="StatusToBrushConverter" />
+    <converters:StatusToForegroundBrushConverter x:Key="StatusToForegroundBrushConverter" />
+    <converters:StatusToEnabledConverter x:Key="StatusToEnabledConverter" />
+  </Page.Resources>
   <Grid Background="{DynamicResource ApplicationBackgroundBrush}">
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
@@ -91,7 +97,9 @@
                   <!-- Title with Status Badge -->
                   <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
                     <TextBlock FontSize="18" FontWeight="Bold" Text="{Binding Salle.Nom}" VerticalAlignment="Center" Margin="0,0,12,0" />
-                    <ui:Badge Content="{Binding Statut}" Appearance="Secondary" />
+                    <Border Background="{Binding Statut, Converter={StaticResource StatusToBrushConverter}}" CornerRadius="4" Padding="8,4,8,4">
+                      <TextBlock Text="{Binding Statut}" Foreground="{Binding Statut, Converter={StaticResource StatusToForegroundBrushConverter}}" FontSize="12" FontWeight="SemiBold" />
+                    </Border>
                   </StackPanel>
 
                   <!-- Info Grid -->
@@ -145,8 +153,9 @@
 
                 <!-- Actions -->
                 <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center" Margin="20,0,0,0">
-                  <Button Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Page}, Path=DataContext.ViewModel.EditReservationCommand}" Content="Modifier" Padding="12,8,12,8" Margin="0,0,0,8" Background="{DynamicResource ControlFillColorDefaultBrush}" BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1" Cursor="Hand" />
-                  <Button Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Page}, Path=DataContext.ViewModel.DeleteReservationCommand}" Content="Supprimer" Padding="12,8,12,8" Background="{DynamicResource ControlFillColorDefaultBrush}" BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1" Cursor="Hand" Foreground="{DynamicResource SystemControlForegroundBaseMediumBrush}" />
+                  <Button Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Page}, Path=DataContext.ViewModel.EditReservationCommand}" CommandParameter="{Binding}" Content="Modifier" Padding="12,8,12,8" Margin="0,0,0,8" Background="{DynamicResource ControlFillColorDefaultBrush}" BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1" Cursor="Hand" IsEnabled="{Binding Statut, Converter={StaticResource StatusToEnabledConverter}}" />
+                  <Button Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Page}, Path=DataContext.ViewModel.CancelReservationCommand}" CommandParameter="{Binding}" Content="Annuler" Padding="12,8,12,8" Margin="0,0,0,8" Background="{DynamicResource ControlFillColorDefaultBrush}" BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1" Cursor="Hand" Foreground="#D83B01" IsEnabled="{Binding Statut, Converter={StaticResource StatusToEnabledConverter}}" />
+                  <Button Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Page}, Path=DataContext.ViewModel.DeleteReservationCommand}" CommandParameter="{Binding}" Content="Supprimer" Padding="12,8,12,8" Background="{DynamicResource ControlFillColorDefaultBrush}" BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1" Cursor="Hand" Foreground="{DynamicResource SystemControlForegroundBaseMediumBrush}" />
                 </StackPanel>
               </Grid>
             </Border>

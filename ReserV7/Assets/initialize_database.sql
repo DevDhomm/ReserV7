@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS Reservations (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     dateReservation TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
     motif TEXT,
-    statut TEXT NOT NULL DEFAULT 'Confirmée' CHECK(statut IN ('En attente', 'Confirmée', 'Annulée', 'Terminée')),
+    statut TEXT NOT NULL DEFAULT 'Confirmée' CHECK(statut IN ('En attente', 'Confirmée', 'En cours', 'Annulée', 'Terminée')),
     userId INTEGER NOT NULL,
     salleId INTEGER NOT NULL,
     creneauId INTEGER,
