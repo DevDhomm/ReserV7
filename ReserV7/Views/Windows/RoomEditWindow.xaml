@@ -199,16 +199,20 @@
                           Command="{Binding DataContext.EditEquipmentCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                           CommandParameter="{Binding}"
                           ToolTip="Éditer cet équipement"
-                          Icon="Edit24"
-                          Padding="8" />
-                        <ui:Button
+                          Icon="{ui:SymbolIcon Edit24}"
+
+
+						Padding="8" />
+						<ui:Button
                           Appearance="Secondary"
                           Command="{Binding DataContext.RemoveEquipmentCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                           CommandParameter="{Binding}"
                           ToolTip="Supprimer cet équipement"
-                          Icon="Delete24"
-                          Padding="8" />
-                      </StackPanel>
+						  Icon="{ui:SymbolIcon Delete24}"
+
+
+						Padding="8" />
+					</StackPanel>
                     </Grid>
                   </Border>
                 </DataTemplate>

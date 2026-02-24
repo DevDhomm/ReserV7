@@ -11,7 +11,9 @@
   WindowStartupLocation="CenterOwner"
   ShowInTaskbar="False"
   WindowStyle="SingleBorderWindow"
-  Background="Transparent"
+      ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+  ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+      Foreground="{DynamicResource TextFillColorPrimaryBrush}"
   d:DesignHeight="900"
   d:DesignWidth="680"
   mc:Ignorable="d"
@@ -26,11 +28,10 @@
     <!-- Header -->
     <Border Grid.Row="0"  Padding="16,12,16,12" BorderThickness="0,0,0,1">
       <StackPanel Orientation="Vertical">
-                <TextBlock FontSize="18"           Foreground="AliceBlue"
+                <TextBlock FontSize="18"          
  FontWeight="Bold" Text="Nouvelle Reservation" />
         <TextBlock
           Margin="0,4,0,0"
-          Foreground="AliceBlue"
           FontSize="12"
           x:Name="SalleNameBlock"
           Text="Salle selectionnee"
@@ -44,7 +45,7 @@
           <!-- Section 1: Motif -->
           <Border  CornerRadius="8" Padding="16" Margin="0,0,0,20">
             <StackPanel Orientation="Vertical">
-                        <TextBlock FontSize="14" FontWeight="Bold"           Foreground="AliceBlue"
+                        <TextBlock FontSize="14" FontWeight="Bold"          
  Text="Motif de la reservation *" Margin="0,0,0,8" />
               <TextBox
                 x:Name="MotifTextBox"
@@ -55,7 +56,6 @@
                 Padding="12,10,12,10"
               />
               <TextBlock
-                          Foreground="AliceBlue"
 
                 FontSize="11"
                 Text="Ex: Cours, Reunion d'equipe, Conference..."
@@ -67,12 +67,12 @@
           <!-- Section 2: Dates -->
           <Border Background="{DynamicResource ControlFillColorSecondaryBrush}" CornerRadius="8" Padding="16" Margin="0,0,0,20">
             <StackPanel Orientation="Vertical">
-                        <TextBlock FontSize="14"           Foreground="AliceBlue"
+                        <TextBlock FontSize="14"           
  FontWeight="Bold" Text="Dates de reservation" Margin="0,0,0,12" />
 
               <!-- Date debut -->
               <StackPanel Orientation="Vertical" Margin="0,0,0,12">
-                            <TextBlock FontSize="12"           Foreground="AliceBlue"
+                            <TextBlock FontSize="12"          
  FontWeight="SemiBold" Text="Date de debut *" Margin="0,0,0,6" />
                 <DatePicker
                   x:Name="DateStartPicker"
@@ -89,7 +89,7 @@
                   SelectedDate="{Binding ViewModel.SelectedDateEnd, Mode=TwoWay}"
                   Padding="12,8,12,8"
                 />
-                            <TextBlock FontSize="10"           Foreground="AliceBlue"
+                            <TextBlock FontSize="10"          
  Text="(meme date si 1 jour)" Margin="0,4,0,0" />
               </StackPanel>
             </StackPanel>
@@ -98,7 +98,7 @@
           <!-- Section 3: Horaires -->
           <Border Background="{DynamicResource ControlFillColorSecondaryBrush}" CornerRadius="8" Padding="16" Margin="0,0,0,20">
             <StackPanel Orientation="Vertical">
-                        <TextBlock FontSize="14"           Foreground="AliceBlue"
+                        <TextBlock FontSize="14"           
  FontWeight="Bold" Text="Horaires" Margin="0,0,0,12" />
 
               <!-- Mode toggle -->
@@ -117,14 +117,14 @@
                     VerticalAlignment="Center"
                     Margin="0,0,8,0"
                   />
-                                <TextBlock VerticalAlignment="Center"           Foreground="AliceBlue"
+                                <TextBlock VerticalAlignment="Center"          
  Text="Horaires personnalises (au lieu de creneaux)" />
                 </StackPanel>
               </Border>
 
               <!-- Creneaux Selection (if not custom) -->
               <StackPanel x:Name="CreneauxPanel" Orientation="Vertical" Visibility="{Binding ViewModel.UseCustomTimes, Converter={StaticResource BoolToVisibilityConverterInverse}}">
-                            <TextBlock           Foreground="AliceBlue"
+                            <TextBlock          
  FontSize="12" FontWeight="SemiBold" Text="Selectionnez un creneau *" Margin="0,0,0,8" />
                 <ListBox
                   x:Name="CreneauxListBox"
@@ -284,8 +284,9 @@
             Padding="8,6,8,6"
             Click="CancelButton_Click"
             Margin="0,0,12,0"
-            Background="{DynamicResource ControlFillColorDefaultBrush}"
+            Background="IndianRed"
             BorderBrush="{DynamicResource ControlBorderBrush}"
+              
             BorderThickness="1"
             Cursor="Hand"
           />
@@ -295,8 +296,8 @@
             Content="Confirmer"
             Width="110"
             Padding="8,6,8,6"
-            Background="Transparent"
-            Foreground="White"
+            Background="CadetBlue"
+           
             Cursor="Hand"
           />
         </Grid>

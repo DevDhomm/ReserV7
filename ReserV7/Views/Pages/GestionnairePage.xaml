@@ -36,14 +36,17 @@
           Appearance="Secondary"
           Command="{Binding ViewModel.SearchCommand}"
           Content="Chercher"
-          Icon="Search24" />
+		  Cursor="Hand"
+          Icon="{ui:SymbolIcon Search24}" />
         <ui:Button
           Grid.Column="2"
-          Margin="12,0,0,0"
+		  		  Cursor="Hand"
+
+          Margin="16,0,0,0"
           Appearance="Primary"
           Command="{Binding ViewModel.AddUtilisateurCommand}"
           Content="Ajouter Utilisateur"
-          Icon="Add24" />
+          Icon="{ui:SymbolIcon Add24}" />
       </Grid>
       <TextBlock 
         FontSize="12" 
@@ -111,7 +114,7 @@
                   Command="{Binding DataContext.ViewModel.EditUtilisateurCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
                   CommandParameter="{Binding}"
                   ToolTip="Éditer cet utilisateur"
-                  Icon="Edit24"
+                  Icon="{ui:SymbolIcon Edit24}"
                   Content="Éditer"
                   Padding="12,8" />
                 <ui:Button
@@ -119,8 +122,10 @@
                   Command="{Binding DataContext.ViewModel.DeleteUtilisateurCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
                   CommandParameter="{Binding}"
                   ToolTip="Supprimer cet utilisateur"
-                  Icon="Delete24"
+                  Icon="{ui:SymbolIcon Delete24}"
                   Content="Supprimer"
+                  BorderBrush="IndianRed"
+				  BorderThickness="1.5"
                   Padding="12,8" />
               </StackPanel>
             </DataTemplate>

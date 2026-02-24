@@ -19,7 +19,7 @@ namespace ReserV7.Views.Windows
             ViewModel = viewModel;
             DataContext = this;
 
-            SystemThemeWatcher.Watch(this);
+         //   SystemThemeWatcher.Watch(this);
 
             InitializeComponent();
             SetPageService(navigationViewPageProvider);

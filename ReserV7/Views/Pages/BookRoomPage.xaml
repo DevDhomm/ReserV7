@@ -11,6 +11,8 @@
   d:DataContext="{d:DesignInstance local:BookRoomPage, IsDesignTimeCreatable=False}"
   d:DesignHeight="450"
   d:DesignWidth="800"
+    ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+  ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
   mc:Ignorable="d"
 >
@@ -89,10 +91,10 @@
         </StackPanel>
 
         <!-- Apply Filter Button -->
-        <Button Grid.Column="4" Grid.Row="0" Command="{Binding ViewModel.ApplyFiltersCommand}" Content="Appliquer les filtres" VerticalAlignment="Bottom" Margin="0,0,8,0" />
+        <Button Grid.Column="4" Grid.Row="0" Command="{Binding ViewModel.ApplyFiltersCommand}" Cursor="Hand" Background="CadetBlue" Content="Appliquer les filtres" VerticalAlignment="Bottom" Margin="0,0,8,0" />
 
         <!-- Reset Button -->
-        <Button Grid.Column="5" Grid.Row="0" Command="{Binding ViewModel.ResetFiltersCommand}" Content="Reset" VerticalAlignment="Bottom" />
+        <Button Grid.Column="5" Grid.Row="0" Command="{Binding ViewModel.ResetFiltersCommand}" Content="Reset" Cursor="Hand" Background="IndianRed" VerticalAlignment="Bottom" />
 
         <!-- Selection info -->
         <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="6" Margin="0,8,0,0" FontSize="11"  Text="{Binding ViewModel.Salles.Count, StringFormat='Sélection: {0} salle(s) trouvée(s)'}" />
@@ -109,8 +111,11 @@
         </ItemsControl.ItemsPanel>
         <ItemsControl.ItemTemplate>
           <DataTemplate>
-            <Border Background="{DynamicResource ControlFillColorDefaultBrush}" CornerRadius="8" Margin="0,0,16,16" Width="320" Padding="0">
-              <Grid>
+                        <Border Background="{DynamicResource ControlFillColorDefaultBrush}" BorderBrush="CadetBlue" BorderThickness="1.5" CornerRadius="8" Margin="0,0,16,16" Width="320" Padding="0">
+                            <Border.Effect>
+                                <DropShadowEffect Color="Black" BlurRadius="12" ShadowDepth="2" Opacity="0.2" Direction="270" />
+                            </Border.Effect>
+                            <Grid>
                 <Grid.RowDefinitions>
                   <RowDefinition Height="Auto" />
                   <RowDefinition Height="*" />
@@ -140,7 +145,7 @@
                 </StackPanel>
 
                 <!-- Card Footer Button -->
-                <Button Grid.Row="2" Command="{Binding DataContext.ViewModel.SelectRoomForBookingCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}" Content="Reserver" Margin="16,0,16,16" Padding="12,8,12,8" />
+                <Button Grid.Row="2" Command="{Binding DataContext.ViewModel.SelectRoomForBookingCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}" Cursor="Hand" Background="CadetBlue" Content="Reserver" Margin="16,0,16,16" Padding="12,8,12,8" />
               </Grid>
             </Border>
           </DataTemplate>

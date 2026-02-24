@@ -70,10 +70,10 @@
 
         <!-- Action Buttons -->
         <StackPanel Grid.Column="4" Orientation="Horizontal" Margin="0,24,0,0" VerticalAlignment="Bottom">
-          <Button Command="{Binding ViewModel.ApplyFiltersCommand}" Content="Appliquer" Padding="12,8,12,8" Margin="0,0,8,0" Background="{DynamicResource AccentFillColorDefaultBrush}" Foreground="Black" Cursor="Hand" />
+          <Button Command="{Binding ViewModel.ApplyFiltersCommand}" Content="Appliquer" Padding="12,8,12,8" Margin="0,0,8,0" Background="CadetBlue"  Cursor="Hand" />
         </StackPanel>
 
-        <Button Grid.Column="5" Command="{Binding ViewModel.ResetFiltersCommand}" Content="Reset" Padding="12,8,12,8" Margin="0,24,0,0" Background="{DynamicResource ControlFillColorSecondaryBrush}" BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1" VerticalAlignment="Bottom" Cursor="Hand" />
+        <Button Grid.Column="5" Command="{Binding ViewModel.ResetFiltersCommand}" Content="Reset" Padding="12,8,12,8" Margin="0,24,0,0" Background="IndianRed" BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1" VerticalAlignment="Bottom" Cursor="Hand" />
 
         <!-- Selection info -->
         <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="6" Margin="0,8,0,0" FontSize="11"  Text="{Binding ViewModel.Reservations.Count, StringFormat='Affichage: {0} réservation(s)'}" />
@@ -85,7 +85,7 @@
       <ItemsControl ItemsSource="{Binding ViewModel.Reservations, Mode=OneWay}">
         <ItemsControl.ItemTemplate>
           <DataTemplate>
-            <Border Padding="20" BorderThickness="1" BorderBrush="{DynamicResource ControlElevationBorderBrush}" CornerRadius="12" Margin="0,0,0,16" Background="{DynamicResource ControlFillColorSecondaryBrush}">
+                        <Border Padding="20" BorderThickness="1.5" BorderBrush="{Binding Statut, Converter={StaticResource StatusToBrushConverter}}"  CornerRadius="12" Margin="0,0,0,16" Background="{DynamicResource ControlFillColorSecondaryBrush}">
               <Grid>
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="*" />

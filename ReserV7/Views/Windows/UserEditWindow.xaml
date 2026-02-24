@@ -35,9 +35,9 @@
     <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="20">
       <StackPanel Orientation="Vertical">
 
-        <!-- Nom -->
+        <!-- nom -->
         <StackPanel Orientation="Vertical" Margin="0,0,0,20">
-          <TextBlock FontSize="14" FontWeight="SemiBold" Text="Nom *" Margin="0,0,0,6" />
+          <TextBlock FontSize="14" Foreground="AntiqueWhite" FontWeight="SemiBold" Text="Nom *" Margin="0,0,0,6" />
           <TextBox
             x:Name="NomTextBox"
             Text="{Binding UserNom, Mode=TwoWay}"
