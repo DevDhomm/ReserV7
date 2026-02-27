@@ -10,7 +10,7 @@
   Title="Réserver une Salle"
   d:DataContext="{d:DesignInstance local:BookRoomPage, IsDesignTimeCreatable=False}"
   d:DesignHeight="450"
-  d:DesignWidth="800"
+  d:DesignWidth="1000"
     ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
   ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
@@ -106,7 +106,7 @@
       <ItemsControl ItemsSource="{Binding ViewModel.Salles, Mode=OneWay}">
         <ItemsControl.ItemsPanel>
           <ItemsPanelTemplate>
-            <WrapPanel Orientation="Horizontal" />
+            <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" />
           </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
         <ItemsControl.ItemTemplate>
