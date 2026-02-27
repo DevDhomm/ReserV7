@@ -15,16 +15,16 @@
   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
   mc:Ignorable="d"
 >
-    <Grid Margin="20" Background="#f8f9fa">
+    <Grid Margin="20">
+        <Grid.Background>
+            <ImageBrush ImageSource="/Assets/lo.jpg" Stretch="UniformToFill"/>
+        </Grid.Background>
+
         <Border
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Width="360"
-            Padding="36,52"
             CornerRadius="16"
-            Background="#FFFFFF"
-            BorderBrush="#FFFFFF"
-            BorderThickness="2"
         >
             <Border.Effect>
                 <DropShadowEffect
@@ -34,14 +34,24 @@
                     Opacity="0.15"
                 />
             </Border.Effect>
-            <StackPanel>
-                <TextBlock Text="Connexion" FontSize="20" FontWeight="Bold" Margin="0,0,0,10" HorizontalAlignment="Center" />
-                <TextBlock Text="Nom d'utilisateur" />
-                <TextBox Text="{Binding ViewModel.Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,4,0,8" />
-                <TextBlock Text="Mot de passe" />
-                <TextBox Text="{Binding ViewModel.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,4,0,8" />
-                <Button Content="Se connecter" Command="{Binding ViewModel.LoginCommand}" Margin="0,12,0,0" HorizontalAlignment="Center" />
-            </StackPanel>
+
+            <Border
+                Padding="36,52"
+                CornerRadius="16"
+                Background="#FFFFFF"
+                BorderBrush="#FFFFFF"
+                BorderThickness="2"
+            >
+                <StackPanel TextOptions.TextFormattingMode="Display">
+                    <TextBlock Text="Connexion" FontSize="20" FontWeight="Bold" Margin="0,0,0,10" HorizontalAlignment="Center" />
+                    <TextBlock Text="Nom d'utilisateur" />
+                    <TextBox Text="{Binding ViewModel.Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,4,0,8" />
+                    <TextBlock Text="Mot de passe" />
+                    <TextBox Text="{Binding ViewModel.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,4,0,8" />
+                    <Button Content="Se connecter" Command="{Binding ViewModel.LoginCommand}" Margin="0,12,0,0" HorizontalAlignment="Center" />
+                </StackPanel>
+            </Border>
+
         </Border>
     </Grid>
 </Page>
