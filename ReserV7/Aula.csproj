@@ -8,6 +8,11 @@
     <UseWPF>true</UseWPF>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <Description>Systeme de reservation de salles universitaire</Description>
+    <Title>Aula</Title>
+    <Version>7.0.0</Version>
+    <AssemblyName>Aula</AssemblyName>
+    <RootNamespace>Aula</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
