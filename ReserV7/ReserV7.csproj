@@ -24,11 +24,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Assets\lo.jpg" />
     <None Remove="Assets\wpfui-icon-256.png" />
     <None Remove="Assets\wpfui-icon-1024.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\lo.jpg" />
     <Resource Include="Assets\wpfui-icon-256.png" />
     <Resource Include="Assets\wpfui-icon-1024.png" />
     <EmbeddedResource Include="Assets\initialize_database.sql" />
