@@ -30,7 +30,7 @@ namespace ReserV7.Services
         /// <param name="cancellationToken">Indicates that the start process has been aborted.</param>
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            // Initialisation de la base de données avant de lancer l'application
+            // Initialize database before handling activation
             await _databaseInitializer.InitializeAsync();
             await HandleActivationAsync();
         }
@@ -45,7 +45,7 @@ namespace ReserV7.Services
         }
 
         /// <summary>
-        /// Affiche la page principale em meme temps
+        /// Creates main window during activation.
         /// </summary>
         private async Task HandleActivationAsync()
         {
@@ -56,7 +56,7 @@ namespace ReserV7.Services
                 )!;
                 _navigationWindow!.ShowWindow();
 
-                // Si non authoriser, rediriger vers la page de login, sinon vers le dashboard  
+                // If not authenticated, go to login page first, else go to dashboard
                 if (!_authService.IsAuthenticated)
                 {
                     _navigationWindow.Navigate(typeof(Views.Pages.LoginPage));

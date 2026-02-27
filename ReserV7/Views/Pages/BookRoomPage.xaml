@@ -102,16 +102,16 @@
     </Border>
 
     <!-- Rooms Grid -->
-    <ScrollViewer Grid.Row="2"  Margin="20,0,20,20">
+    <ScrollViewer Grid.Row="2" Margin="20,0,20,20">
       <ItemsControl ItemsSource="{Binding ViewModel.Salles, Mode=OneWay}">
         <ItemsControl.ItemsPanel>
           <ItemsPanelTemplate>
-            <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" />
+            <WrapPanel Orientation="Horizontal" />
           </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
         <ItemsControl.ItemTemplate>
           <DataTemplate>
-                        <Border Background="{DynamicResource ControlFillColorDefaultBrush}" BorderBrush="CadetBlue" BorderThickness="1.5" CornerRadius="8" Margin="0,0,16,16" Width="360" Padding="0">
+                        <Border Background="{DynamicResource ControlFillColorDefaultBrush}" BorderBrush="CadetBlue" BorderThickness="1.5" CornerRadius="8" Margin="0,0,16,16" Width="320" Padding="0">
                             <Border.Effect>
                                 <DropShadowEffect Color="Black" BlurRadius="12" ShadowDepth="2" Opacity="0.2" Direction="270" />
                             </Border.Effect>

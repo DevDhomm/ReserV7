@@ -107,8 +107,7 @@
             MinWidth="100"
             Padding="12,8,12,8"
             Background="CadetBlue"
-              
-            Foreground="Black"
+            Foreground="{DynamicResource TextOnAccentFillColorPrimaryBrush}"
             BorderThickness="0"
             Click="PrimaryButton_Click"
             Content="OK"

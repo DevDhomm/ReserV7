@@ -62,7 +62,7 @@ namespace ReserV7.Converters
         {
             if (value is string status)
             {
-                // Desactive le boutton d'edit pour "Terminée", "En cours", et "Annulée"
+                // Disable edit button for "Terminée", "En cours", and "Annulée" status
                 return status != "Terminée" && status != "En cours" && status != "Annulée";
             }
 

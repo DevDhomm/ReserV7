@@ -26,7 +26,7 @@ namespace ReserV7.Services
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
                 return false;
 
-            // Reauete pour recuprer les users de la base de donnes et comparer les crdentials
+            // Query database for user
             var user = _context.Users.FirstOrDefault(u => u.Username == username && u.Password == password);
 
             if (user == null)
