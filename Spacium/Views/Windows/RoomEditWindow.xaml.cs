@@ -189,22 +189,8 @@ namespace Spacium.Views.Windows
 
                     foreach (var equipment in RoomEquipments)
                     {
-                        if (equipment.Id == 0)
-                        {
-                            // Nouvel équipement créé
-                            equipment.SalleId = 0; // Sera défini après insertion de la salle
-                            newSalle.Equipements.Add(equipment);
-                        }
-                        else
-                        {
-                            // Équipement existant - le récupérer de la BD pour éviter les doublons en mémoire
-                            var existingEquipment = _context.Equipements.FirstOrDefault(e => e.Id == equipment.Id);
-                            if (existingEquipment != null)
-                            {
-                                existingEquipment.SalleId = 0; // Sera défini après insertion de la salle
-                                newSalle.Equipements.Add(existingEquipment);
-                            }
-                        }
+                        equipment.SalleId = 0;
+                        newSalle.Equipements.Add(equipment);
                     }
 
                     _context.Salles.Add(newSalle);
@@ -237,15 +223,7 @@ namespace Spacium.Views.Windows
                     {
                         if (equipment.Id == 0)
                         {
-                            // Nouvel équipement créé
                             equipment.SalleId = _currentSalle.Id;
-                            _currentSalle.Equipements.Add(equipment);
-                        }
-                        else if (!existingEquipmentIds.Contains(equipment.Id))
-                        {
-                            // Équipement existant ajouté à la salle
-                            equipment.SalleId = _currentSalle.Id;
-                            _context.Equipements.Update(equipment);
                             _currentSalle.Equipements.Add(equipment);
                         }
                     }
@@ -265,50 +243,10 @@ namespace Spacium.Views.Windows
 
         private void AddEquipment()
         {
-            // Get all existing equipment from database
-            var existingEquipment = _context.Equipements.ToList();
-
-            // Get equipment already added to this room
-            var alreadyAddedIds = RoomEquipments.Select(e => e.Id).Where(id => id > 0).ToHashSet();
-
-            // Show dialog to either select existing or create new
-            var selectWindow = new EquipmentSelectWindow(existingEquipment.Where(e => !alreadyAddedIds.Contains(e.Id)).ToList());
-
-            if (selectWindow.ShowDialog() == true)
+            var editWindow = new EquipmentEditWindow();
+            if (editWindow.ShowDialog() == true && editWindow.SavedEquipment != null)
             {
-                if (selectWindow.SelectedEquipment != null)
-                {
-                    // Reuse existing equipment
-                    var equipmentToAdd = _context.Equipements.Find(selectWindow.SelectedEquipment.Id);
-                    if (equipmentToAdd != null && !RoomEquipments.Any(e => e.Id == equipmentToAdd.Id))
-                    {
-                        RoomEquipments.Add(equipmentToAdd);
-                    }
-                }
-                else if (selectWindow.NewEquipment != null)
-                {
-                    // Create new equipment - check for duplicate by name and type
-                    var duplicateCheck = _context.Equipements.FirstOrDefault(e =>
-                        e.Nom.ToLower() == selectWindow.NewEquipment.Nom.ToLower() &&
-                        e.Type.ToLower() == selectWindow.NewEquipment.Type.ToLower());
-
-                    if (duplicateCheck != null)
-                    {
-                        MessageBox.Show(
-                            $"Un équipement nommé '{duplicateCheck.Nom}' de type '{duplicateCheck.Type}' existe déjà. Veuillez le sélectionner dans la liste.",
-                            "Équipement en doublon",
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Information);
-                    }
-                    else if (!RoomEquipments.Any(e => e.Nom.ToLower() == selectWindow.NewEquipment.Nom.ToLower()))
-                    {
-                        RoomEquipments.Add(selectWindow.NewEquipment);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Cet équipement est déjà ajouté à cette salle.", "Doublon", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    }
-                }
+                RoomEquipments.Add(editWindow.SavedEquipment);
             }
         }
 

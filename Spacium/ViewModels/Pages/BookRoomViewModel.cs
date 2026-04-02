@@ -70,7 +70,7 @@ namespace Spacium.ViewModels.Pages
         private int selectedFloor = 0;
 
         [ObservableProperty]
-        private ObservableCollection<EquipementFilter> equipementFilters = new();
+        private ObservableCollection<EquipementTypeFilter> equipementFilters = new();
 
         public BookRoomViewModel(ApplicationDbContext context, IAuthService authService)
         {
@@ -86,10 +86,15 @@ namespace Spacium.ViewModels.Pages
                 .Where(s => s.Disponibilite)
                 .ToList();
 
-            // Load available equipments for filter
-            var equipements = _context.Equipements.Distinct().ToList();
-            EquipementFilters = new ObservableCollection<EquipementFilter>(
-                equipements.Select(e => new EquipementFilter { Id = e.Id, Nom = e.Nom, IsSelected = false })
+            // Load available equipment types for filter
+            var equipmentTypes = _context.Equipements
+                .Select(e => e.Type)
+                .Distinct()
+                .OrderBy(t => t)
+                .ToList();
+
+            EquipementFilters = new ObservableCollection<EquipementTypeFilter>(
+                equipmentTypes.Select(t => new EquipementTypeFilter { Type = t, IsSelected = false })
             );
 
             ApplyFilters();
@@ -118,16 +123,16 @@ namespace Spacium.ViewModels.Pages
                 filtered = filtered.Where(s => s.Etage == SelectedFloor);
             }
 
-            // Filtre par équipements
-            var selectedEquipementIds = EquipementFilters
+            // Filtre par types d'équipements
+            var selectedEquipmentTypes = EquipementFilters
                 .Where(e => e.IsSelected)
-                .Select(e => e.Id)
+                .Select(e => e.Type)
                 .ToList();
 
-            if (selectedEquipementIds.Any())
+            if (selectedEquipmentTypes.Any())
             {
                 filtered = filtered.Where(s =>
-                    s.Equipements.Any(e => selectedEquipementIds.Contains(e.Id))
+                    s.Equipements.Any(e => selectedEquipmentTypes.Contains(e.Type))
                 );
             }
 
@@ -449,13 +454,10 @@ namespace Spacium.ViewModels.Pages
         public string DisplayText { get; set; } = string.Empty;
     }
 
-    public partial class EquipementFilter : ObservableObject
+    public partial class EquipementTypeFilter : ObservableObject
     {
         [ObservableProperty]
-        private int id;
-
-        [ObservableProperty]
-        private string nom = string.Empty;
+        private string type = string.Empty;
 
         [ObservableProperty]
         private bool isSelected;

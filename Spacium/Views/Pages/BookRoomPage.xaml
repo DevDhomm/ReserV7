@@ -78,7 +78,7 @@
 
         <!-- Equipment Filters -->
         <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="6" Margin="0,12,0,0">
-          <TextBlock Text="Filtre par équipement" FontSize="12" FontWeight="Bold" Margin="0,0,0,6" />
+          <TextBlock Text="Filtre par type d'équipement" FontSize="12" FontWeight="Bold" Margin="0,0,0,6" />
           <ItemsControl ItemsSource="{Binding ViewModel.EquipementFilters}">
             <ItemsControl.ItemsPanel>
               <ItemsPanelTemplate>
@@ -87,7 +87,7 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
               <DataTemplate>
-                <CheckBox Content="{Binding Nom}" IsChecked="{Binding IsSelected, Mode=TwoWay}" Margin="0,0,12,0" VerticalAlignment="Center" />
+                <CheckBox Content="{Binding Type}" IsChecked="{Binding IsSelected, Mode=TwoWay}" Margin="0,0,12,0" VerticalAlignment="Center" />
               </DataTemplate>
             </ItemsControl.ItemTemplate>
           </ItemsControl>

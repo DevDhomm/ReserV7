@@ -177,6 +177,8 @@ VALUES
     (9, 'Salle 2-6', 'Salle de cours standard', 70, 'Salle de cours', 2, 1, CURRENT_TIMESTAMP),
     (10, 'Salle 2-5', 'Salle de cours standard', 70, 'Salle de cours', 0, 1, CURRENT_TIMESTAMP);
 
+
+
 -- Créneaux horaires prédéfinis (journée standard)
 INSERT OR IGNORE INTO Creneaux (id, debut, fin, dateCreation)
 VALUES
