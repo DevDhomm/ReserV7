@@ -18,39 +18,41 @@
 >
   <Grid RowDefinitions="Auto,*">
     <!-- Header Section -->
-    <StackPanel Grid.Row="0" Margin="20">
-      <TextBlock FontSize="28" FontWeight="Bold" Text="Gestion des Salles" />
-      <TextBlock FontSize="14" Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="Créez, modifiez et supprimez les salles disponibles" Margin="0,4,0,0" />
+    <Border Grid.Row="0" Background="{DynamicResource ControlFillColorDefaultBrush}" Padding="20" Margin="0" BorderThickness="0,0,0,2" BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}">
+      <StackPanel>
+        <TextBlock FontSize="28" FontWeight="Bold" Text="Gestion des Salles" Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
+        <TextBlock FontSize="14" Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="Créez, modifiez et supprimez les salles disponibles" Margin="0,4,0,0" />
 
-      <!-- Search and Add Button -->
-      <Grid ColumnDefinitions="*,Auto,Auto" Margin="0,12,0,0">
-        <TextBox 
-          Grid.Column="0"
-          x:Name="SearchBox"
-          Text="{Binding ViewModel.SearchText, Mode=TwoWay}"
-          Padding="12,8"
-          VerticalAlignment="Center" />
-        <ui:Button
-          Grid.Column="1"
-          Margin="12,0,0,0"
-          Appearance="Secondary"
-          Command="{Binding ViewModel.SearchCommand}"
-          Content="Chercher"
-          Icon="Search24" />
-        <ui:Button
-          Grid.Column="2"
-          Margin="12,0,0,0"
-          Appearance="Primary"
-          Command="{Binding ViewModel.AddRoomCommand}"
-          Content="Ajouter Salle"
-          Icon="Add24" />
-      </Grid>
-      <TextBlock 
-        FontSize="12" 
-        Foreground="{DynamicResource TextFillColorTertiaryBrush}"
-        Text="💡 Tip: Vous pouvez chercher par nom de salle, description, type ou équipements" 
-        Margin="0,8,0,0" />
-    </StackPanel>
+        <!-- Search and Add Button -->
+        <Grid ColumnDefinitions="*,Auto,Auto" Margin="0,12,0,0">
+          <TextBox 
+            Grid.Column="0"
+            x:Name="SearchBox"
+            Text="{Binding ViewModel.SearchText, Mode=TwoWay}"
+            Padding="12,8"
+            VerticalAlignment="Center" />
+          <ui:Button
+            Grid.Column="1"
+            Margin="12,0,0,0"
+            Appearance="Secondary"
+            Command="{Binding ViewModel.SearchCommand}"
+            Content="Chercher"
+            Icon="Search24" />
+          <ui:Button
+            Grid.Column="2"
+            Margin="12,0,0,0"
+            Appearance="Primary"
+            Command="{Binding ViewModel.AddRoomCommand}"
+            Content="Ajouter Salle"
+            Icon="Add24" />
+        </Grid>
+        <TextBlock 
+          FontSize="12" 
+          Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+          Text="💡 Tip: Vous pouvez chercher par nom de salle, description, type ou équipements" 
+          Margin="0,8,0,0" />
+      </StackPanel>
+    </Border>
 
     <!-- Rooms Table -->
     <DataGrid

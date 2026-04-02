@@ -24,14 +24,15 @@
     </Grid.RowDefinitions>
 
     <!-- Header -->
-    <StackPanel Grid.Row="0" Margin="20" Orientation="Vertical">
-      <TextBlock FontSize="28" FontWeight="Bold" Text="Rooms" Margin="0,0,0,4" />
-      <TextBlock FontSize="20" FontWeight="Bold" Text="Salles" Margin="0,0,0,4" />
-      <TextBlock FontSize="14"  Text="Trouvez et reservez la salle que vous recherchez" />
-    </StackPanel>
+    <Border Grid.Row="0" Background="{DynamicResource ControlFillColorDefaultBrush}" Padding="20" Margin="0" BorderThickness="0,0,0,2" BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}">
+      <StackPanel Orientation="Vertical">
+        <TextBlock FontSize="24" FontWeight="Bold" Text="Réserver une Salle" Foreground="{DynamicResource TextFillColorPrimaryBrush}" Margin="0,0,0,4" />
+        <TextBlock FontSize="14" Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="Trouvez et réservez la salle que vous recherchez" />
+      </StackPanel>
+    </Border>
 
     <!-- Filters Section -->
-    <Border Grid.Row="1" Background="{DynamicResource ControlFillColorDefaultBrush}" Margin="20,0,20,20" Padding="16" CornerRadius="8">
+    <Border Grid.Row="1" Background="{DynamicResource ControlFillColorDefaultBrush}" Margin="20,20,20,20" Padding="20" CornerRadius="12" BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}" BorderThickness="1,1,1,1">
       <Grid>
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="250" />

@@ -26,15 +26,15 @@
     </Grid.RowDefinitions>
 
     <!-- Header -->
-    <Border Grid.Row="0"  Padding="16,12,16,12" BorderThickness="0,0,0,1">
+    <Border Grid.Row="0" Padding="16,12,16,12" BorderThickness="0,0,0,2" BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}" Background="{DynamicResource ControlFillColorDefaultBrush}">
       <StackPanel Orientation="Vertical">
-                <TextBlock FontSize="18"          
- FontWeight="Bold" Text="Nouvelle Reservation" />
+        <TextBlock FontSize="18" FontWeight="Bold" Text="Nouvelle Réservation" Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
         <TextBlock
           Margin="0,4,0,0"
           FontSize="12"
           x:Name="SalleNameBlock"
-          Text="Salle selectionnee"
+          Text="Salle sélectionnée"
+          Foreground="{DynamicResource TextFillColorSecondaryBrush}"
         />
       </StackPanel>
     </Border>

@@ -23,12 +23,22 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Image Grid.Row="0" Source="pack://application:,,,/Assets/logo.png" Width="112" Height="100" Margin="0,20,0,0" HorizontalAlignment="Center"/>
 
-        <TextBlock Grid.Row="1" FontSize="26" FontWeight="Bold" Text="Bienvenue sur notre système de  réservation de salles!"
-                   HorizontalAlignment="Center" TextAlignment="Center" Margin="20,20,20,0"/>
-        <TextBlock Grid.Row="2" Text="Réservez facilement vos salles pour vos réunions et cours."
-                   FontSize="20" TextAlignment="Center" Margin="20,30,20,0" TextWrapping="Wrap"/>
+        <!-- Header Card with Gradient Background -->
+        <Border Grid.Row="0" Grid.RowSpan="3" Background="{DynamicResource ApplicationBackgroundBrush}" Margin="20,20,20,20" CornerRadius="16" Padding="40" BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}" BorderThickness="1">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Image Source="pack://application:,,,/Assets/logo.png" Width="140" Height="120" Margin="0,0,0,20" HorizontalAlignment="Center"/>
+                <TextBlock FontSize="32" FontWeight="Bold" Text="Bienvenue sur Spacium!"
+                           HorizontalAlignment="Center" TextAlignment="Center" Margin="20,20,20,0"
+                           Foreground="{DynamicResource TextFillColorPrimaryBrush}"/>
+                <TextBlock Text="Système de réservation de salles intelligent"
+                           FontSize="18" TextAlignment="Center" Margin="20,10,20,0" 
+                           Foreground="{DynamicResource TextFillColorSecondaryBrush}" TextWrapping="Wrap"/>
+                <TextBlock Text="Réservez facilement vos salles pour vos réunions et cours."
+                           FontSize="16" TextAlignment="Center" Margin="20,20,20,30" 
+                           Foreground="{DynamicResource TextFillColorTertiaryBrush}" TextWrapping="Wrap"/>
+            </StackPanel>
+        </Border>
     </Grid>
 </Page>
 

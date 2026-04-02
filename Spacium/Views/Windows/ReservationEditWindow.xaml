@@ -23,14 +23,16 @@
         </Grid.RowDefinitions>
 
         <!-- Header -->
-        <Grid
+        <Border
             Grid.Row="0"
-            Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}">
+            Background="{DynamicResource ControlFillColorDefaultBrush}"
+            BorderThickness="0,0,0,2"
+            BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}">
             <StackPanel Margin="24,20">
                 <TextBlock
                     FontSize="18"
                     FontWeight="SemiBold"
-                    Foreground="{ui:ThemeResource TextFillColorPrimaryBrush}"
+                    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
                     Text="Modifier la Réservation" />
                 <TextBlock
                     Margin="0,8,0,0"
@@ -39,7 +41,7 @@
                     Text="{Binding SelectedReservation.Salle.Nom,
                                    StringFormat='Salle: {0}'}" />
             </StackPanel>
-        </Grid>
+        </Border>
 
         <!-- Content -->
         <ScrollViewer Grid.Row="1" Padding="24,16" VerticalScrollBarVisibility="Auto">

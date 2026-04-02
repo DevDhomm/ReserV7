@@ -16,7 +16,7 @@
   mc:Ignorable="d"
 >
     <Grid Margin="20">
-        
+
 
         <Border
             HorizontalAlignment="Center"
@@ -37,16 +37,16 @@
                 Padding="36,52"
                 CornerRadius="16"
                 Background="#FFFFFF"
-                BorderBrush="#FFFFFF"
+                BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}"
                 BorderThickness="2"
             >
                 <StackPanel TextOptions.TextFormattingMode="Display">
-                    <TextBlock Text="Connexion" FontSize="20" FontWeight="Bold" Margin="0,0,0,10" HorizontalAlignment="Center" />
-                    <TextBlock Text="Nom d'utilisateur" />
-                    <TextBox Text="{Binding ViewModel.Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,4,0,8" />
-                    <TextBlock Text="Mot de passe" />
-                    <TextBox Text="{Binding ViewModel.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,4,0,8" />
-                    <Button Content="Se connecter" Command="{Binding ViewModel.LoginCommand}" Margin="0,12,0,0" HorizontalAlignment="Center" />
+                    <TextBlock Text="Spacium - Connexion" FontSize="22" FontWeight="Bold" Margin="0,0,0,10" HorizontalAlignment="Center" Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
+                    <TextBlock Text="Nom d'utilisateur" FontSize="13" Foreground="#333333" />
+                    <TextBox Text="{Binding ViewModel.Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,4,0,8" Padding="10" />
+                    <TextBlock Text="Mot de passe" FontSize="13" Foreground="#333333" Margin="0,8,0,0" />
+                    <TextBox Text="{Binding ViewModel.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,4,0,8" Padding="10" />
+                    <ui:Button Content="Se connecter" Command="{Binding ViewModel.LoginCommand}" Margin="0,16,0,0" HorizontalAlignment="Stretch" Appearance="Primary" />
                 </StackPanel>
             </Border>
 
