@@ -166,14 +166,16 @@ VALUES
 -- Salles
 INSERT OR IGNORE INTO Salles (id, nom, description, capacite, type, etage, disponibilite, dateCreation)
 VALUES 
-    (1, 'Amphithéâtre A101', 'Grand amphithéâtre', 150, 'Amphithéâtre', 1, 1, CURRENT_TIMESTAMP),
-    (2, 'Salle de Cours B201', 'Salle de cours standard', 35, 'Salle de cours', 2, 1, CURRENT_TIMESTAMP),
-    (3, 'Salle de Cours B202', 'Salle de cours standard', 35, 'Salle de cours', 2, 1, CURRENT_TIMESTAMP),
-    (4, 'Laboratoire C301', 'Laboratoire informatique', 25, 'Laboratoire', 3, 1, CURRENT_TIMESTAMP),
-    (5, 'Laboratoire C302', 'Laboratoire scientifique', 25, 'Laboratoire', 3, 1, CURRENT_TIMESTAMP),
-    (6, 'Salle de Séminaire D102', 'Salle de séminaire', 50, 'Salle de séminaire', 1, 1, CURRENT_TIMESTAMP),
-    (7, 'Salle de Réunion E103', 'Salle de réunion', 15, 'Salle de réunion', 1, 1, CURRENT_TIMESTAMP),
-    (8, 'Salle de Travail Collaboratif F104', 'Espace collaboration', 20, 'Salle de travail collaboratif', 1, 1, CURRENT_TIMESTAMP);
+    (1, 'Salle 0-1', 'Salle de cours standard', 40, 'Salle de cours', 0, 1, CURRENT_TIMESTAMP),
+    (2, 'Salle 0-3', 'Salle de cours standard', 70, 'Salle de cours', 0, 1, CURRENT_TIMESTAMP),
+    (3, 'Salle 0-4', 'Salle de cours standard', 50, 'Salle de cours', 0, 1, CURRENT_TIMESTAMP),
+    (4, 'Laboratoire informatique', 'Laboratoire informatique', 25, 'Laboratoire', 0, 1, CURRENT_TIMESTAMP),
+    (5, 'Salle de langue', 'Salle de cours', 25, 'Salle de cours', 0, 1, CURRENT_TIMESTAMP),
+    (6, 'Salle 1-3', 'Salle de cours', 80, 'Salle de cours', 1, 1, CURRENT_TIMESTAMP),
+    (7, 'Grande salle', 'Salle de cours et reunion', 200, 'Salle de réunion et de cours', 1, 1, CURRENT_TIMESTAMP),
+    (8, 'Salle 1-4', 'Espace salle de cours', 20, 'Salle de travail collaboratif', 1, 1, CURRENT_TIMESTAMP),
+    (9, 'Salle 2-6', 'Salle de cours standard', 70, 'Salle de cours', 2, 1, CURRENT_TIMESTAMP),
+    (10, 'Salle 2-5', 'Salle de cours standard', 70, 'Salle de cours', 0, 1, CURRENT_TIMESTAMP);
 
 -- Créneaux horaires prédéfinis (journée standard)
 INSERT OR IGNORE INTO Creneaux (id, debut, fin, dateCreation)

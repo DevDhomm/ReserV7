@@ -44,6 +44,7 @@
         <Grid.RowDefinitions>
           <RowDefinition Height="Auto" />
           <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <!-- Search by name -->
@@ -69,35 +70,31 @@
           </ComboBox>
         </StackPanel>
 
-        <!-- Equipment Filters -->
-        <StackPanel Grid.Column="3" Grid.Row="0" Margin="0,0,12,0">
-          <TextBlock Text="Filtre par équipement" FontSize="12" FontWeight="Bold" Margin="0,0,0,4" />
-          <ScrollViewer Height="32" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Auto">
-            <StackPanel Orientation="Horizontal">
-              <ItemsControl ItemsSource="{Binding ViewModel.EquipementFilters}">
-                <ItemsControl.ItemsPanel>
-                  <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal" />
-                  </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                  <DataTemplate>
-                    <CheckBox Content="{Binding Nom}" IsChecked="{Binding IsSelected, Mode=TwoWay}" Margin="0,0,12,0" VerticalAlignment="Center" />
-                  </DataTemplate>
-                </ItemsControl.ItemTemplate>
-              </ItemsControl>
-            </StackPanel>
-          </ScrollViewer>
-        </StackPanel>
-
         <!-- Apply Filter Button -->
         <Button Grid.Column="4" Grid.Row="0" Command="{Binding ViewModel.ApplyFiltersCommand}" Cursor="Hand" Background="CadetBlue" Content="Appliquer les filtres" VerticalAlignment="Bottom" Margin="0,0,8,0" />
 
         <!-- Reset Button -->
         <Button Grid.Column="5" Grid.Row="0" Command="{Binding ViewModel.ResetFiltersCommand}" Content="Reset" Cursor="Hand" Background="IndianRed" VerticalAlignment="Bottom" />
 
+        <!-- Equipment Filters -->
+        <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="6" Margin="0,12,0,0">
+          <TextBlock Text="Filtre par équipement" FontSize="12" FontWeight="Bold" Margin="0,0,0,6" />
+          <ItemsControl ItemsSource="{Binding ViewModel.EquipementFilters}">
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate>
+                <WrapPanel Orientation="Horizontal" />
+              </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                <CheckBox Content="{Binding Nom}" IsChecked="{Binding IsSelected, Mode=TwoWay}" Margin="0,0,12,0" VerticalAlignment="Center" />
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </StackPanel>
+
         <!-- Selection info -->
-        <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="6" Margin="0,8,0,0" FontSize="11"  Text="{Binding ViewModel.Salles.Count, StringFormat='Sélection: {0} salle(s) trouvée(s)'}" />
+        <TextBlock Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="6" Margin="0,8,0,0" FontSize="11"  Text="{Binding ViewModel.Salles.Count, StringFormat='Sélection: {0} salle(s) trouvée(s)'}" />
       </Grid>
     </Border>
 
