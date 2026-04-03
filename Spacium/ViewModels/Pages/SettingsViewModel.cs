@@ -1,5 +1,8 @@
 using Wpf.Ui.Abstractions.Controls;
 using Wpf.Ui.Appearance;
+using System.Windows;
+using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace Spacium.ViewModels.Pages
 {
@@ -26,6 +29,7 @@ namespace Spacium.ViewModels.Pages
         private void InitializeViewModel()
         {
             CurrentTheme = ApplicationThemeManager.GetAppTheme();
+            ApplyPatternForTheme(CurrentTheme);
             AppVersion = $"UiDesktopApp1 - {GetAssemblyVersion()}";
 
             _isInitialized = true;
@@ -48,6 +52,11 @@ namespace Spacium.ViewModels.Pages
 
                     ApplicationThemeManager.Apply(ApplicationTheme.Light);
                     CurrentTheme = ApplicationTheme.Light;
+                    ApplyPatternForTheme(CurrentTheme);
+                    Application.Current?.Dispatcher.BeginInvoke(
+                        () => ApplyPatternForTheme(CurrentTheme),
+                        DispatcherPriority.ApplicationIdle
+                    );
 
                     break;
 
@@ -57,8 +66,29 @@ namespace Spacium.ViewModels.Pages
 
                     ApplicationThemeManager.Apply(ApplicationTheme.Dark);
                     CurrentTheme = ApplicationTheme.Dark;
+                    ApplyPatternForTheme(CurrentTheme);
+                    Application.Current?.Dispatcher.BeginInvoke(
+                        () => ApplyPatternForTheme(CurrentTheme),
+                        DispatcherPriority.ApplicationIdle
+                    );
 
                     break;
+            }
+        }
+
+        private static void ApplyPatternForTheme(ApplicationTheme theme)
+        {
+            var resources = Application.Current?.Resources;
+            if (resources == null)
+                return;
+
+            var resourceKey = theme == ApplicationTheme.Dark
+                ? "PagePatternBackgroundBrushDark"
+                : "PagePatternBackgroundBrushLight";
+
+            if (resources[resourceKey] is Brush brush)
+            {
+                resources["PagePatternBackgroundBrush"] = brush.CloneCurrentValue();
             }
         }
     }

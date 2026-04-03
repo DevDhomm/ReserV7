@@ -16,6 +16,93 @@
         <ui:ControlsDictionary />
       </ResourceDictionary.MergedDictionaries>
 
+      <Color x:Key="BrandPrimaryColor">#166394</Color>
+      <Color x:Key="BrandAccentColor">#66b0df</Color>
+      <SolidColorBrush x:Key="BrandPrimaryBrush" Color="{StaticResource BrandPrimaryColor}" />
+      <SolidColorBrush x:Key="BrandAccentBrush" Color="{StaticResource BrandAccentColor}" />
+
+      <DrawingBrush x:Key="PagePatternBackgroundBrushLight"
+                    Stretch="Fill"
+                    Viewbox="0,0,1,1"
+                    ViewboxUnits="RelativeToBoundingBox">
+        <DrawingBrush.Drawing>
+          <DrawingGroup>
+            <GeometryDrawing>
+              <GeometryDrawing.Pen>
+                <Pen Brush="#5C166394" Thickness="0.006" StartLineCap="Round" EndLineCap="Round" />
+              </GeometryDrawing.Pen>
+              <GeometryDrawing.Geometry>
+                <GeometryGroup>
+                  <PathGeometry Figures="M0.56,1 C0.74,0.92 0.86,0.88 1,0.78" />
+                  <PathGeometry Figures="M0.67,1 C0.82,0.94 0.91,0.90 1,0.84" />
+                  <PathGeometry Figures="M0.77,1 C0.89,0.96 0.95,0.93 1,0.90" />
+                  <PathGeometry Figures="M0.62,1 C0.80,0.95 0.92,0.91 1,0.88" />
+                </GeometryGroup>
+              </GeometryDrawing.Geometry>
+            </GeometryDrawing>
+            <GeometryDrawing>
+              <GeometryDrawing.Pen>
+                <Pen Brush="#7A66B0DF" Thickness="0.004" StartLineCap="Round" EndLineCap="Round" />
+              </GeometryDrawing.Pen>
+              <GeometryDrawing.Geometry>
+                <GeometryGroup>
+                  <PathGeometry Figures="M0.60,1 C0.78,0.90 0.90,0.85 1,0.73" />
+                  <PathGeometry Figures="M0.72,1 C0.86,0.92 0.94,0.87 1,0.80" />
+                  <PathGeometry Figures="M0.84,1 C0.92,0.96 0.97,0.93 1,0.90" />
+                  <PathGeometry Figures="M0.54,0.96 C0.70,0.90 0.84,0.84 1,0.74" />
+                </GeometryGroup>
+              </GeometryDrawing.Geometry>
+            </GeometryDrawing>
+            <GeometryDrawing Brush="#2A66B0DF" Geometry="M0.93,0.83 A0.012,0.012 0 1 1 0.9299,0.83 Z" />
+            <GeometryDrawing Brush="#28166394" Geometry="M0.88,0.90 A0.008,0.008 0 1 1 0.8799,0.90 Z" />
+          </DrawingGroup>
+        </DrawingBrush.Drawing>
+      </DrawingBrush>
+
+      <DrawingBrush x:Key="PagePatternBackgroundBrushDark"
+                    Stretch="Fill"
+                    Viewbox="0,0,1,1"
+                    ViewboxUnits="RelativeToBoundingBox">
+        <DrawingBrush.Drawing>
+          <DrawingGroup>
+            <GeometryDrawing>
+              <GeometryDrawing.Pen>
+                <Pen Brush="#8066B0DF" Thickness="0.006" StartLineCap="Round" EndLineCap="Round" />
+              </GeometryDrawing.Pen>
+              <GeometryDrawing.Geometry>
+                <GeometryGroup>
+                  <PathGeometry Figures="M0.56,1 C0.74,0.92 0.86,0.88 1,0.78" />
+                  <PathGeometry Figures="M0.67,1 C0.82,0.94 0.91,0.90 1,0.84" />
+                  <PathGeometry Figures="M0.77,1 C0.89,0.96 0.95,0.93 1,0.90" />
+                  <PathGeometry Figures="M0.62,1 C0.80,0.95 0.92,0.91 1,0.88" />
+                </GeometryGroup>
+              </GeometryDrawing.Geometry>
+            </GeometryDrawing>
+            <GeometryDrawing>
+              <GeometryDrawing.Pen>
+                <Pen Brush="#70166394" Thickness="0.004" StartLineCap="Round" EndLineCap="Round" />
+              </GeometryDrawing.Pen>
+              <GeometryDrawing.Geometry>
+                <GeometryGroup>
+                  <PathGeometry Figures="M0.60,1 C0.78,0.90 0.90,0.85 1,0.73" />
+                  <PathGeometry Figures="M0.72,1 C0.86,0.92 0.94,0.87 1,0.80" />
+                  <PathGeometry Figures="M0.84,1 C0.92,0.96 0.97,0.93 1,0.90" />
+                  <PathGeometry Figures="M0.54,0.96 C0.70,0.90 0.84,0.84 1,0.74" />
+                </GeometryGroup>
+              </GeometryDrawing.Geometry>
+            </GeometryDrawing>
+            <GeometryDrawing Brush="#4066B0DF" Geometry="M0.93,0.83 A0.012,0.012 0 1 1 0.9299,0.83 Z" />
+            <GeometryDrawing Brush="#35166394" Geometry="M0.88,0.90 A0.008,0.008 0 1 1 0.8799,0.90 Z" />
+          </DrawingGroup>
+        </DrawingBrush.Drawing>
+      </DrawingBrush>
+
+      <StaticResource x:Key="PagePatternBackgroundBrush" ResourceKey="PagePatternBackgroundBrushLight" />
+
+      <Style TargetType="{x:Type Page}">
+        <Setter Property="Background" Value="Transparent" />
+      </Style>
+
       <!-- Converters -->
       <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
       <local:BoolToVisibilityConverterInverse x:Key="BoolToVisibilityConverterInverse" />

@@ -20,40 +20,42 @@
   <Page.Resources>
     <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
   </Page.Resources>
-  <StackPanel>
-    <Border Padding="20" Background="{DynamicResource ControlFillColorDefaultBrush}" BorderThickness="0,0,0,2" BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}" Margin="0,0,0,20">
+  <Grid>
+    <StackPanel>
+      <Border Padding="20" Background="{DynamicResource ControlFillColorDefaultBrush}" BorderThickness="0,0,0,2" BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}" Margin="0,0,0,20">
       <TextBlock FontSize="24" FontWeight="Bold" Text="Paramètres" Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
-    </Border>
+      </Border>
 
-    <StackPanel Margin="20">
-      <TextBlock FontSize="18" FontWeight="SemiBold" Text="Personnalisation" Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
-      <TextBlock Margin="0,12,0,0" FontSize="14" Text="Thème" />
-      <RadioButton
-        Margin="0,12,0,0"
-        Command="{Binding ViewModel.ChangeThemeCommand, Mode=OneWay}"
-        CommandParameter="theme_light"
-        Content="Light"
-        GroupName="themeSelect"
-        IsChecked="{Binding ViewModel.CurrentTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Light, Mode=OneWay}"
-      />
-      <RadioButton
-        Margin="0,8,0,0"
-        Command="{Binding ViewModel.ChangeThemeCommand, Mode=OneWay}"
-        CommandParameter="theme_dark"
-        Content="Dark"
-        GroupName="themeSelect"
-        IsChecked="{Binding ViewModel.CurrentTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Dark, Mode=OneWay}"
-      />
-    </StackPanel>
-
-    <Border Padding="20" Margin="0,20,0,0" Background="{DynamicResource ControlFillColorDefaultBrush}" BorderThickness="0,2,0,0" BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}">
-      <StackPanel>
-        <TextBlock FontSize="18" FontWeight="SemiBold" Text="À propos de Spacium" Foreground="{DynamicResource TextFillColorPrimaryBrush}" Margin="0,0,0,12" />
-        <TextBlock Margin="0,0,0,8" Text="{Binding ViewModel.AppVersion, Mode=OneWay}" FontSize="12" />
-        <TextBlock Margin="0,0,0,8" Text="Spacium est un système de réservation de salle moderne créé" FontSize="12" />
-        <TextBlock Margin="0,0,0,0" Text="par un groupe de jeunes motivés dans le but de répondre à un besoin important dans la planification des salles." FontSize="12" />
+      <StackPanel Margin="20">
+        <TextBlock FontSize="18" FontWeight="SemiBold" Text="Personnalisation" Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
+        <TextBlock Margin="0,12,0,0" FontSize="14" Text="Thème" />
+        <RadioButton
+          Margin="0,12,0,0"
+          Command="{Binding ViewModel.ChangeThemeCommand, Mode=OneWay}"
+          CommandParameter="theme_light"
+          Content="Light"
+          GroupName="themeSelect"
+          IsChecked="{Binding ViewModel.CurrentTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Light, Mode=OneWay}"
+        />
+        <RadioButton
+          Margin="0,8,0,0"
+          Command="{Binding ViewModel.ChangeThemeCommand, Mode=OneWay}"
+          CommandParameter="theme_dark"
+          Content="Dark"
+          GroupName="themeSelect"
+          IsChecked="{Binding ViewModel.CurrentTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Dark, Mode=OneWay}"
+        />
       </StackPanel>
-    </Border>
-  </StackPanel>
+
+      <Border Padding="20" Margin="0,20,0,0" Background="{DynamicResource ControlFillColorDefaultBrush}" BorderThickness="0,2,0,0" BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}">
+        <StackPanel>
+          <TextBlock FontSize="18" FontWeight="SemiBold" Text="À propos de Spacium" Foreground="{DynamicResource TextFillColorPrimaryBrush}" Margin="0,0,0,12" />
+          <TextBlock Margin="0,0,0,8" Text="{Binding ViewModel.AppVersion, Mode=OneWay}" FontSize="12" />
+          <TextBlock Margin="0,0,0,8" Text="Spacium est un système de réservation de salle moderne créé" FontSize="12" />
+          <TextBlock Margin="0,0,0,0" Text="par un groupe de jeunes motivés dans le but de répondre à un besoin important dans la planification des salles." FontSize="12" />
+        </StackPanel>
+      </Border>
+    </StackPanel>
+  </Grid>
 </Page>
 

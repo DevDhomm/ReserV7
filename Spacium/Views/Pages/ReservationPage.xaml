@@ -20,7 +20,7 @@
     <converters:StatusToForegroundBrushConverter x:Key="StatusToForegroundBrushConverter" />
     <converters:StatusToEnabledConverter x:Key="StatusToEnabledConverter" />
   </Page.Resources>
-  <Grid Background="{DynamicResource ApplicationBackgroundBrush}">
+  <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
       <RowDefinition Height="Auto" />
@@ -71,7 +71,7 @@
 
         <!-- Action Buttons -->
         <StackPanel Grid.Column="4" Orientation="Horizontal" Margin="0,24,0,0" VerticalAlignment="Bottom">
-          <Button Command="{Binding ViewModel.ApplyFiltersCommand}" Content="Appliquer" Padding="12,8,12,8" Margin="0,0,8,0" Background="CadetBlue"  Cursor="Hand" />
+          <Button Command="{Binding ViewModel.ApplyFiltersCommand}" Content="Appliquer" Padding="12,8,12,8" Margin="0,0,8,0" Background="{DynamicResource BrandPrimaryBrush}" Foreground="White" Cursor="Hand" />
         </StackPanel>
 
         <Button Grid.Column="5" Command="{Binding ViewModel.ResetFiltersCommand}" Content="Reset" Padding="12,8,12,8" Margin="0,24,0,0" Background="IndianRed" BorderBrush="{DynamicResource ControlBorderBrush}" BorderThickness="1" VerticalAlignment="Bottom" Cursor="Hand" />

@@ -12,6 +12,7 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Threading;
 using Wpf.Ui;
+using Wpf.Ui.Appearance;
 using Wpf.Ui.DependencyInjection;
 
 namespace Spacium
@@ -93,11 +94,26 @@ namespace Spacium
         /// </summary>
         private async void OnStartup(object sender, StartupEventArgs e)
         {
+            ApplyPatternForCurrentTheme();
+
             // Initialize database
             var dbInitializer = _host.Services.GetRequiredService<DatabaseInitializerService>();
             await dbInitializer.InitializeAsync();
 
             await _host.StartAsync();
+        }
+
+        private void ApplyPatternForCurrentTheme()
+        {
+            var currentTheme = ApplicationThemeManager.GetAppTheme();
+            var key = currentTheme == ApplicationTheme.Dark
+                ? "PagePatternBackgroundBrushDark"
+                : "PagePatternBackgroundBrushLight";
+
+            if (Resources[key] is System.Windows.Media.Brush brush)
+            {
+                Resources["PagePatternBackgroundBrush"] = brush.CloneCurrentValue();
+            }
         }
 
         /// <summary>
