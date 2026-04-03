@@ -4,6 +4,7 @@ using Spacium.Models;
 using Spacium.Services;
 using Spacium.Views.Windows;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Windows;
 
 namespace Spacium.ViewModels.Pages
@@ -330,17 +331,18 @@ namespace Spacium.ViewModels.Pages
                 return;
             }
 
-            // Create a copy of the reservation for editing
-            var reservationToEdit = _context.Reservations
+            var reservationEntity = _context.Reservations
                 .Include(r => r.Salle)
                 .Include(r => r.User)
                 .FirstOrDefault(r => r.Id == reservation.Id);
 
-            if (reservationToEdit == null)
+            if (reservationEntity == null)
             {
                 MessageBox.Show("La réservation n'a pas pu être chargée.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+
+            var reservationToEdit = CreateEditableCopy(reservationEntity);
 
             // Show edit window
             var editWindow = new ReservationEditWindow(reservationToEdit);
@@ -350,8 +352,20 @@ namespace Spacium.ViewModels.Pages
             {
                 try
                 {
-                    // Validate and save changes
-                    _context.Reservations.Update(reservationToEdit);
+                    if (TryGetConflictingReservation(reservationToEdit, out var conflictingReservation))
+                    {
+                        MessageBox.Show(
+                            $"Conflit détecté avec une autre réservation pour la salle {reservationToEdit.Salle?.Nom}.\n" +
+                            $"Réservation en conflit: {conflictingReservation?.DateDebut} au {conflictingReservation?.DateFin} " +
+                            $"de {conflictingReservation?.HeureDebut} à {conflictingReservation?.HeureFin}.",
+                            "Chevauchement détecté",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning);
+                        return;
+                    }
+
+                    ApplyEditedValues(reservationEntity, reservationToEdit);
+                    _context.Reservations.Update(reservationEntity);
                     _context.SaveChanges();
 
                     // Refresh the list
@@ -364,6 +378,97 @@ namespace Spacium.ViewModels.Pages
                     MessageBox.Show($"Erreur lors de la modification: {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+        }
+
+        private static Reservation CreateEditableCopy(Reservation source)
+        {
+            return new Reservation
+            {
+                Id = source.Id,
+                DateReservation = source.DateReservation,
+                Motif = source.Motif,
+                Statut = source.Statut,
+                UserId = source.UserId,
+                SalleId = source.SalleId,
+                CreneauId = source.CreneauId,
+                DateDebut = source.DateDebut,
+                DateFin = source.DateFin,
+                HeureDebut = source.HeureDebut,
+                HeureFin = source.HeureFin,
+                User = source.User,
+                Salle = source.Salle,
+                Creneau = source.Creneau
+            };
+        }
+
+        private static void ApplyEditedValues(Reservation target, Reservation source)
+        {
+            target.Motif = source.Motif;
+            target.Statut = source.Statut;
+            target.DateDebut = source.DateDebut;
+            target.DateFin = source.DateFin;
+            target.HeureDebut = source.HeureDebut;
+            target.HeureFin = source.HeureFin;
+            target.CreneauId = source.CreneauId;
+        }
+
+        private bool TryGetConflictingReservation(Reservation reservationToEdit, out Reservation? conflictingReservation)
+        {
+            conflictingReservation = null;
+
+            if (!TryParseReservationRange(reservationToEdit, out var editStartDate, out var editEndDate, out var editStartTime, out var editEndTime))
+            {
+                return false;
+            }
+
+            var reservationsInSameRoom = _context.Reservations
+                .Where(r => r.SalleId == reservationToEdit.SalleId
+                            && r.Id != reservationToEdit.Id
+                            && r.Statut != "Annulée")
+                .ToList();
+
+            foreach (var existingReservation in reservationsInSameRoom)
+            {
+                if (!TryParseReservationRange(existingReservation, out var existingStartDate, out var existingEndDate, out var existingStartTime, out var existingEndTime))
+                {
+                    continue;
+                }
+
+                var datesOverlap = editStartDate <= existingEndDate && editEndDate >= existingStartDate;
+                var timesOverlap = editStartTime < existingEndTime && editEndTime > existingStartTime;
+
+                if (datesOverlap && timesOverlap)
+                {
+                    conflictingReservation = existingReservation;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static bool TryParseReservationRange(
+            Reservation reservation,
+            out DateTime startDate,
+            out DateTime endDate,
+            out TimeSpan startTime,
+            out TimeSpan endTime)
+        {
+            startDate = default;
+            endDate = default;
+            startTime = default;
+            endTime = default;
+
+            var dateStyle = DateTimeStyles.AssumeLocal;
+            var dateCulture = CultureInfo.InvariantCulture;
+
+            var validDates = DateTime.TryParseExact(reservation.DateDebut, "yyyy-MM-dd", dateCulture, dateStyle, out startDate)
+                             && DateTime.TryParseExact(reservation.DateFin, "yyyy-MM-dd", dateCulture, dateStyle, out endDate);
+
+            var validTimes = TimeSpan.TryParse(reservation.HeureDebut, out startTime)
+                             && TimeSpan.TryParse(reservation.HeureFin, out endTime);
+
+            return validDates && validTimes;
         }
     }
 }

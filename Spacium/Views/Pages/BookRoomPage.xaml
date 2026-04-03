@@ -11,9 +11,13 @@
   d:DataContext="{d:DesignInstance local:BookRoomPage, IsDesignTimeCreatable=False}"
   d:DesignHeight="450"
   d:DesignWidth="1000"
-    ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+  ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
   ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
   Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+  UseLayoutRounding="True"
+  SnapsToDevicePixels="True"
+  TextOptions.TextFormattingMode="Display"
+  TextOptions.TextRenderingMode="ClearType"
   mc:Ignorable="d"
 >
   <Grid>
@@ -100,7 +104,7 @@
     </Border>
 
     <!-- Rooms Grid -->
-    <ScrollViewer Grid.Row="2" Margin="20,0,20,20">
+    <ScrollViewer x:Name="RoomsScrollViewer" Grid.Row="2" Margin="20,0,20,20" PreviewMouseWheel="RoomsScrollViewer_PreviewMouseWheel">
       <ItemsControl ItemsSource="{Binding ViewModel.Salles, Mode=OneWay}">
         <ItemsControl.ItemsPanel>
           <ItemsPanelTemplate>
@@ -110,9 +114,6 @@
         <ItemsControl.ItemTemplate>
           <DataTemplate>
             <Border Background="{DynamicResource ControlFillColorDefaultBrush}" BorderBrush="CadetBlue" BorderThickness="1.5" CornerRadius="10" Margin="0,0,16,16" Width="340" Padding="0">
-              <Border.Effect>
-                <DropShadowEffect Color="Black" BlurRadius="12" ShadowDepth="2" Opacity="0.2" Direction="270" />
-              </Border.Effect>
               <Grid>
                 <Grid.RowDefinitions>
                   <RowDefinition Height="Auto" />

@@ -4,6 +4,7 @@ using Spacium.Models;
 using Spacium.Services;
 using Spacium.Views.Windows;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Windows;
 
 namespace Spacium.ViewModels.Pages
@@ -189,8 +190,10 @@ namespace Spacium.ViewModels.Pages
             // Get existing reservations for this room on the selected date
             var selectedDateStr = SelectedDate.ToString("yyyy-MM-dd");
             var existingReservations = _context.Reservations
-                .Where(r => r.SalleId == SelectedSalle.Id && r.DateDebut == selectedDateStr)
+                .Where(r => r.SalleId == SelectedSalle.Id && r.Statut != "Annulée")
                 .ToList();
+
+            var selectedDateValue = DateTime.ParseExact(selectedDateStr, "yyyy-MM-dd", CultureInfo.InvariantCulture);
 
             var availableCreneaux = new List<CreneauDisplay>();
 
@@ -199,8 +202,10 @@ namespace Spacium.ViewModels.Pages
                 // Check if this creneau conflicts with any existing reservation
                 bool hasConflict = existingReservations.Any(r =>
                 {
-                    if (!TimeSpan.TryParse(r.HeureDebut, out var reservationStart) ||
-                        !TimeSpan.TryParse(r.HeureFin, out var reservationEnd))
+                    if (!TryParseReservationRange(r, out var reservationStartDate, out var reservationEndDate, out var reservationStart, out var reservationEnd))
+                        return false;
+
+                    if (selectedDateValue < reservationStartDate || selectedDateValue > reservationEndDate)
                         return false;
 
                     return !(creneau.Fin <= reservationStart || creneau.Debut >= reservationEnd);
@@ -314,20 +319,22 @@ namespace Spacium.ViewModels.Pages
             var startTimeStr = startTime.ToString(@"hh\:mm");
             var endTimeStr = endTime.ToString(@"hh\:mm");
 
+            var existingReservations = _context.Reservations
+                .Where(r => r.SalleId == SelectedSalle.Id && r.Statut != "Annulée")
+                .ToList();
+
             // Générer toutes les dates entre dateStart et dateEnd
             var conflictDates = new List<DateTime>();
             for (var date = SelectedDate; date <= SelectedEndDate; date = date.AddDays(1))
             {
-                var dateStr = date.ToString("yyyy-MM-dd");
-
                 // Vérifier les conflits pour cette date
-                var dayConflicts = _context.Reservations
-                    .Where(r => r.SalleId == SelectedSalle.Id && r.DateDebut == dateStr)
-                    .ToList()
+                var dayConflicts = existingReservations
                     .Where(r =>
                     {
-                        if (!TimeSpan.TryParse(r.HeureDebut, out var reservationStart) ||
-                            !TimeSpan.TryParse(r.HeureFin, out var reservationEnd))
+                        if (!TryParseReservationRange(r, out var reservationStartDate, out var reservationEndDate, out var reservationStart, out var reservationEnd))
+                            return false;
+
+                        if (date.Date < reservationStartDate.Date || date.Date > reservationEndDate.Date)
                             return false;
 
                         return !(endTime <= reservationStart || startTime >= reservationEnd);
@@ -420,6 +427,27 @@ namespace Spacium.ViewModels.Pages
             };
             dialog.ShowDialog();
             AvailabilityMessage = message;
+        }
+
+        private static bool TryParseReservationRange(
+            Reservation reservation,
+            out DateTime startDate,
+            out DateTime endDate,
+            out TimeSpan startTime,
+            out TimeSpan endTime)
+        {
+            startDate = default;
+            endDate = default;
+            startTime = default;
+            endTime = default;
+
+            var validDates = DateTime.TryParseExact(reservation.DateDebut, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out startDate)
+                && DateTime.TryParseExact(reservation.DateFin, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out endDate);
+
+            var validTimes = TimeSpan.TryParse(reservation.HeureDebut, out startTime)
+                && TimeSpan.TryParse(reservation.HeureFin, out endTime);
+
+            return validDates && validTimes;
         }
 
         private void ResetForm()

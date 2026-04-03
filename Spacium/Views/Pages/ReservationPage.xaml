@@ -82,7 +82,7 @@
     </Border>
 
     <!-- Reservations List -->
-    <ScrollViewer Grid.Row="2" Margin="20,0,20,20" VerticalScrollBarVisibility="Auto">
+    <ScrollViewer x:Name="ReservationsScrollViewer" Grid.Row="2" Margin="20,0,20,20" VerticalScrollBarVisibility="Auto" PreviewMouseWheel="ReservationsScrollViewer_PreviewMouseWheel">
       <ItemsControl ItemsSource="{Binding ViewModel.Reservations, Mode=OneWay}">
         <ItemsControl.ItemTemplate>
           <DataTemplate>
